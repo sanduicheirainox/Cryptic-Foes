@@ -44,6 +44,8 @@ public class EntityPetrifiedStone extends ThrowableProjectile
 				entity.hurt(entity.damageSources().mobAttack((LivingEntity) this.getOwner()), 8.0F);
 			}
 		}
+		this.playSound(SoundEvents.ZOMBIE_BREAK_WOODEN_DOOR);
+		this.discard();
 	}
 	
 	@Override

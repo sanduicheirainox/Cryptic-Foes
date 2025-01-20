@@ -146,15 +146,28 @@ public class EntityPetrified extends AbstractAnimatableMonster
     	{
     		if(this.canLook())
     		{
-    			this.getLookControl().setLookAt(this.getTarget(), 30.0F, 30.0F);
+    			if(this.hasStone())
+    			{
+        			this.getLookControl().setLookAt(this.getTarget(), 30.0F, 30.0F);
+    			}
     		}
 			if(this.canMove())
 			{
 				if(this.hasStone() && this.distanceTo(this.getTarget()) >= 6.0F)
 				{
-					this.getNavigation().moveTo(this.getTarget(), this.getAttributeBaseValue(Attributes.MOVEMENT_SPEED));
+					this.getNavigation().moveTo(this.getTarget(), 1.0F);
 				}
 			}
+    	}
+    	
+    	if(!this.hasStone())
+    	{
+    		if(this.getAnimationTick() <= 0 && this.getAnimationState() == 0)
+    		{
+	  			this.setAnimationState(2);
+	  			this.setAnimationTick(34);
+				this.setHasStone(true);
+    		}
     	}
     }
     

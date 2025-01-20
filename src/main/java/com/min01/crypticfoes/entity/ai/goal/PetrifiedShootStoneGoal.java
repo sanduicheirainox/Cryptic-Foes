@@ -21,16 +21,9 @@ public class PetrifiedShootStoneGoal extends BasicAnimationSkillGoal<EntityPetri
 	@Override
 	public boolean additionalStartCondition() 
 	{
-		return this.mob.distanceTo(this.mob.getTarget()) >= 6.0F && this.mob.distanceTo(this.mob.getTarget()) <= 8.0F;
+		return this.mob.distanceTo(this.mob.getTarget()) <= 8.0F && this.mob.hasStone();
 	}
 	
-	@Override
-	public void stop() 
-	{
-		super.stop();
-		this.mob.setAnimationState(0);
-	}
-
 	@Override
 	protected void performSkill() 
 	{
@@ -38,9 +31,19 @@ public class PetrifiedShootStoneGoal extends BasicAnimationSkillGoal<EntityPetri
 		{
 			EntityPetrifiedStone stone = new EntityPetrifiedStone(CrypticEntities.PETRIFIED_STONE.get(), this.mob.level);
 			stone.setPos(this.mob.posArray[0]);
-			stone.shootFromRotation(this.mob, this.mob.getXRot(), this.mob.getYRot(), 0.0F, 1.5F, 1.0F);
+			stone.setOwner(this.mob);
+			stone.shootFromRotation(this.mob, this.mob.getXRot(), this.mob.getYHeadRot(), 0.0F, 1.5F, 1.0F);
 			this.mob.level.addFreshEntity(stone);
+			this.mob.setHasStone(false);
 		}
+	}
+	
+	@Override
+	public void stop() 
+	{
+		super.stop();
+		this.mob.setAnimationState(0);
+		this.mob.setAnimationTick(100);
 	}
 
 	@Override

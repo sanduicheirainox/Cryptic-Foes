@@ -18,7 +18,7 @@ public class CrypticItems
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, CrypticFoes.MODID);
 	
 	public static final RegistryObject<Item> PETRIFIED_SPAWN_EGG = registerSpawnEgg("petrified_spawn_egg", () -> CrypticEntities.PETRIFIED.get(), 0, 0);
-	public static final RegistryObject<Item> FRAGILE_BONES = ITEMS.register("fragile_bones", () -> new Item(new Item.Properties()));
+	public static final RegistryObject<Item> FRAGILE_BONE = ITEMS.register("fragile_bone", () -> new Item(new Item.Properties()));
 	
 	public static RegistryObject<Item> registerSpawnEgg(String name, Supplier<EntityType<? extends Mob>> type, int color1, int color2)
 	{

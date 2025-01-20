@@ -68,8 +68,8 @@ public class ModelPetrified extends HierarchicalModel<EntityPetrified>
 		this.root().getAllParts().forEach(ModelPart::resetPose);
 		this.animate(entity.idleAnimationState, PetrifiedAnimation.PETRIFIED_IDLE, ageInTicks);
 		this.animate(entity.idleNoneAnimationState, PetrifiedAnimation.PETRIFIED_IDLE_NONE, ageInTicks);
-		this.animate(entity.throwAnimationState, PetrifiedAnimation.PETRIFIED_IDLE_NONE, ageInTicks);
-		this.animate(entity.reloadingAnimationState, PetrifiedAnimation.PETRIFIED_IDLE_NONE, ageInTicks);
+		this.animate(entity.throwAnimationState, PetrifiedAnimation.PETRIFIED_THROW, ageInTicks);
+		this.animate(entity.reloadingAnimationState, PetrifiedAnimation.PETRIFIED_RELOADING, ageInTicks);
 		if(entity.hasStone())
 		{
 			this.animateWalk(PetrifiedAnimation.PETRIFIED_WALK, limbSwing, limbSwingAmount, 2.5F, 2.5F);
