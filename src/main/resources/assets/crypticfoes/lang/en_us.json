@@ -1,0 +1,8 @@
+{
+	"entity.crypticfoes.petrified": "Petrified",
+	"entity.crypticfoes.petrified_stone": "Petrified Stone",
+	"item.crypticfoes.petrified_spawn_egg": "Petrified Spawn Egg",
+	"item.crypticfoes.fragile_bones": "Fragile Bones",
+	"effect.crypticfoes.fragility": "Fragility",
+	"effect.crypticfoes.description": "reduce armor point"
+}

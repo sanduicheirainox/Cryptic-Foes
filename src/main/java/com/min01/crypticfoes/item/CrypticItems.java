@@ -1,0 +1,27 @@
+package com.min01.crypticfoes.item;
+
+import java.util.function.Supplier;
+
+import com.min01.crypticfoes.CrypticFoes;
+import com.min01.crypticfoes.entity.CrypticEntities;
+
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.item.Item;
+import net.minecraftforge.common.ForgeSpawnEggItem;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
+
+public class CrypticItems
+{
+	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, CrypticFoes.MODID);
+	
+	public static final RegistryObject<Item> PETRIFIED_SPAWN_EGG = registerSpawnEgg("petrified_spawn_egg", () -> CrypticEntities.PETRIFIED.get(), 0, 0);
+	public static final RegistryObject<Item> FRAGILE_BONES = ITEMS.register("fragile_bones", () -> new Item(new Item.Properties()));
+	
+	public static RegistryObject<Item> registerSpawnEgg(String name, Supplier<EntityType<? extends Mob>> type, int color1, int color2)
+	{
+		return ITEMS.register(name, () -> new ForgeSpawnEggItem(type, color1, color2, new Item.Properties()));
+	}
+}

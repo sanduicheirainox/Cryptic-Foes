@@ -1,0 +1,69 @@
+package com.min01.crypticfoes.util;
+
+import org.joml.Matrix4f;
+import org.joml.Quaternionf;
+import org.joml.Vector4f;
+
+import com.mojang.blaze3d.vertex.PoseStack;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
+@OnlyIn(Dist.CLIENT)
+public class CrypticClientUtil 
+{
+	public static final Minecraft MC = Minecraft.getInstance();
+	
+	public static void animateHead(ModelPart head, float netHeadYaw, float headPitch)
+	{
+		head.yRot += Math.toRadians(netHeadYaw);
+		head.xRot += Math.toRadians(headPitch);
+	}
+	
+	//https://github.com/EEEAB/EEEABsMobs/blob/master/src/main/java/com/eeeab/animate/client/util/ModelPartUtils.java#L57
+    
+    public static Vec3 getWorldPositionOfMultiPart(Entity entity, ModelPart root, Vec3 rotation, String... modelPartName)
+    {
+    	return getWorldPosition(entity, root, false, rotation, modelPartName);
+    }
+    
+    public static Vec3 getWorldPosition(Entity entity, ModelPart root, Vec3 rotation, String... modelPartName)
+    {
+    	return getWorldPosition(entity, root, true, rotation, modelPartName);
+    }
+    
+    public static Vec3 getWorldPosition(Entity entity, ModelPart root, boolean translateToEntity, Vec3 rotation, String... modelPartName)
+    {
+        PoseStack poseStack = new PoseStack();
+        if(translateToEntity)
+        {
+        	poseStack.translate(entity.getX(), entity.getY(), entity.getZ());
+        }
+        poseStack.mulPose(new Quaternionf().rotateXYZ((float) Math.toRadians(rotation.x), (float) Math.toRadians(-rotation.y + 180.0F), (float) Math.toRadians(rotation.z)));
+        poseStack.scale(-1.0F, -1.0F, 1.0F);
+        ModelPart nextPart = null;
+        for(int i = 0; i < modelPartName.length; i++)
+        {
+            if(i == 0)
+            {
+                nextPart = root.getChild(modelPartName[0]);
+                nextPart.translateAndRotate(poseStack);
+            }
+            else 
+            {
+                ModelPart child = nextPart.getChild(modelPartName[i]);
+                child.translateAndRotate(poseStack);
+                nextPart = child;
+            }
+        }
+        PoseStack.Pose last = poseStack.last();
+        Matrix4f matrix4f = last.pose();
+        Vector4f vector4f = new Vector4f(0, 0, 0, 1);
+        vector4f.mul(matrix4f);
+        return new Vec3(vector4f.x(), vector4f.y(), vector4f.z());
+    }
+}
