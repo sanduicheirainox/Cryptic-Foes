@@ -1,6 +1,7 @@
 package com.min01.crypticfoes.entity;
 
 import com.min01.crypticfoes.CrypticFoes;
+import com.min01.crypticfoes.entity.living.EntityBrancher;
 import com.min01.crypticfoes.entity.living.EntityPetrified;
 import com.min01.crypticfoes.entity.projectile.EntityPetrifiedStone;
 
@@ -18,6 +19,7 @@ public class CrypticEntities
 	
 	public static final RegistryObject<EntityType<EntityPetrified>> PETRIFIED = registerEntity("petrified", createBuilder(EntityPetrified::new, MobCategory.MONSTER).sized(0.75F, 1.5F));
 	public static final RegistryObject<EntityType<EntityPetrifiedStone>> PETRIFIED_STONE = registerEntity("petrified_stone", createBuilder(EntityPetrifiedStone::new, MobCategory.MISC).sized(0.875F, 0.875F));
+	public static final RegistryObject<EntityType<EntityBrancher>> BRANCHER = registerEntity("brancher", createBuilder(EntityBrancher::new, MobCategory.CREATURE).sized(0.6F, 2.0F));
 	
 	public static <T extends Entity> EntityType.Builder<T> createBuilder(EntityType.EntityFactory<T> factory, MobCategory category)
 	{

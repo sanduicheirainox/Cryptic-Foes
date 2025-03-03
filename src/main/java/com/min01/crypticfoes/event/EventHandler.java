@@ -2,6 +2,7 @@ package com.min01.crypticfoes.event;
 
 import com.min01.crypticfoes.CrypticFoes;
 import com.min01.crypticfoes.entity.CrypticEntities;
+import com.min01.crypticfoes.entity.living.EntityBrancher;
 import com.min01.crypticfoes.entity.living.EntityPetrified;
 
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -16,6 +17,7 @@ public class EventHandler
     public static void onEntityAttributeCreation(EntityAttributeCreationEvent event) 
     {
     	event.put(CrypticEntities.PETRIFIED.get(), EntityPetrified.createAttributes().build());
+    	event.put(CrypticEntities.BRANCHER.get(), EntityBrancher.createAttributes().build());
     }
     
     @SubscribeEvent

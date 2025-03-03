@@ -1,5 +1,6 @@
 package com.min01.crypticfoes;
 
+import com.min01.crypticfoes.block.CrypticBlocks;
 import com.min01.crypticfoes.effect.CrypticEffects;
 import com.min01.crypticfoes.entity.CrypticEntities;
 import com.min01.crypticfoes.item.CrypticItems;
@@ -23,6 +24,7 @@ public class CrypticFoes
 		CrypticItems.ITEMS.register(bus);
 		CrypticEntityDataSerializers.SERIALIZERS.register(bus);
 		CrypticEffects.EFFECTS.register(bus);
+		CrypticBlocks.BLOCKS.register(bus);
 		
 		CrypticNetwork.registerMessages();
 	}

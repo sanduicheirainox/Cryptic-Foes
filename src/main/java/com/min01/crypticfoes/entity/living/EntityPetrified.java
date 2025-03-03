@@ -138,8 +138,8 @@ public class EntityPetrified extends AbstractAnimatableMonster
     	super.tick();
     	if(this.level.isClientSide)
     	{
-    		this.idleAnimationState.animateWhen(this.hasStone() && this.getAnimationState() == 0 && !CrypticUtil.isMoving(this), this.tickCount);
-    		this.idleNoneAnimationState.animateWhen(!this.hasStone() && this.getAnimationState() == 0 && !CrypticUtil.isMoving(this), this.tickCount);
+    		this.idleAnimationState.animateWhen(this.hasStone() && !CrypticUtil.isMoving(this), this.tickCount);
+    		this.idleNoneAnimationState.animateWhen(!this.hasStone() && !CrypticUtil.isMoving(this), this.tickCount);
     	}
     	
     	if(this.getTarget() != null)
