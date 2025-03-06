@@ -43,7 +43,7 @@ public class EntityBrancher extends AbstractAnimatableCreature
     {
         return Mob.createMobAttributes()
     			.add(Attributes.MAX_HEALTH, 30.0F)
-    			.add(Attributes.MOVEMENT_SPEED, 0.25F);
+    			.add(Attributes.MOVEMENT_SPEED, 1.2F);
     }
     
     @Override
@@ -57,7 +57,7 @@ public class EntityBrancher extends AbstractAnimatableCreature
     @Override
     protected void registerGoals() 
     {
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8F));
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.5F));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true)
         {
         	@Override
@@ -66,7 +66,15 @@ public class EntityBrancher extends AbstractAnimatableCreature
         		return super.canUse() && EntityBrancher.this.isAngry();
         	}
         });
-        this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
+        this.targetSelector.addGoal(1, new HurtByTargetGoal(this)
+        {
+        	@Override
+        	public void start() 
+        	{
+        		super.start();
+        		EntityBrancher.this.setAngerCount(2);
+        	}
+        });
     }
     
 	@Override
@@ -117,7 +125,8 @@ public class EntityBrancher extends AbstractAnimatableCreature
     	
     	if(this.isAngry() && this.getTarget() != null)
     	{
-    		this.getNavigation().moveTo(this.getTarget(), 0.42F);
+    		this.setRunning(true);
+    		this.getNavigation().moveTo(this.getTarget(), 1.0F);
     	}
     	
     	if(this.getAnimationTick() <= 0)
