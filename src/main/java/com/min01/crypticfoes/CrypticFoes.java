@@ -4,6 +4,7 @@ import com.min01.crypticfoes.block.CrypticBlocks;
 import com.min01.crypticfoes.effect.CrypticEffects;
 import com.min01.crypticfoes.entity.CrypticEntities;
 import com.min01.crypticfoes.item.CrypticItems;
+import com.min01.crypticfoes.misc.CrypticCreativeTabs;
 import com.min01.crypticfoes.misc.CrypticEntityDataSerializers;
 import com.min01.crypticfoes.network.CrypticNetwork;
 
@@ -25,6 +26,7 @@ public class CrypticFoes
 		CrypticEntityDataSerializers.SERIALIZERS.register(bus);
 		CrypticEffects.EFFECTS.register(bus);
 		CrypticBlocks.BLOCKS.register(bus);
+		CrypticCreativeTabs.CREATIVE_MODE_TAB.register(bus);
 		
 		CrypticNetwork.registerMessages();
 	}

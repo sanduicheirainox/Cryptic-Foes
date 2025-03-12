@@ -20,8 +20,8 @@ public class CrypticItems
 {
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, CrypticFoes.MODID);
 	
-	public static final RegistryObject<Item> PETRIFIED_SPAWN_EGG = registerSpawnEgg("petrified_spawn_egg", () -> CrypticEntities.PETRIFIED.get(), 0, 0);
-	public static final RegistryObject<Item> BRANCHER_SPAWN_EGG = registerSpawnEgg("brancher_spawn_egg", () -> CrypticEntities.BRANCHER.get(), 0, 0);
+	public static final RegistryObject<Item> PETRIFIED_SPAWN_EGG = registerSpawnEgg("petrified_spawn_egg", () -> CrypticEntities.PETRIFIED.get(), 13812100, 12029529);
+	public static final RegistryObject<Item> BRANCHER_SPAWN_EGG = registerSpawnEgg("brancher_spawn_egg", () -> CrypticEntities.BRANCHER.get(), 4864030, 2364933);
 	public static final RegistryObject<Item> FRAGILE_BONE = ITEMS.register("fragile_bone", () -> new Item(new Item.Properties()));
 	public static final RegistryObject<Item> FALLEN_LEAVES = registerBlockItem("fallen_leaves", () -> CrypticBlocks.FALLEN_LEAVES.get(), new Item.Properties());
 	

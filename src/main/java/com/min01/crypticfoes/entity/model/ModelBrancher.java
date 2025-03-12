@@ -76,7 +76,7 @@ public class ModelBrancher extends HierarchicalModel<EntityBrancher>
 		this.animate(entity.explosionAnimationState, BrancherAnimation.BRANCHER_EXPLOSION, ageInTicks);
 		if(entity.isRunning())
 		{
-			this.animateWalk(BrancherAnimation.BRANCHER_RUN, limbSwing, limbSwingAmount, 2.5F, 2.5F);
+			this.animateWalk(BrancherAnimation.BRANCHER_RUN, limbSwing, limbSwingAmount, 1.5F, 2.5F);
 		}
 		else
 		{

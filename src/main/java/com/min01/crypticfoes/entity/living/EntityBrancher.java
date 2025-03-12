@@ -23,6 +23,7 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 public class EntityBrancher extends AbstractAnimatableCreature
 {
 	public static final EntityDataAccessor<Integer> ANGER_COUNT = SynchedEntityData.defineId(EntityBrancher.class, EntityDataSerializers.INT);
+	public static final EntityDataAccessor<Integer> EXPLOSION_MAX_TICK = SynchedEntityData.defineId(EntityBrancher.class, EntityDataSerializers.INT);
 	public static final EntityDataAccessor<Boolean> IS_RUNNING = SynchedEntityData.defineId(EntityBrancher.class, EntityDataSerializers.BOOLEAN);
 	
 	public final AnimationState idleAnimationState = new AnimationState();
@@ -32,6 +33,9 @@ public class EntityBrancher extends AbstractAnimatableCreature
     public float brightness;
     public float brightnessOld;
     public int glowingTicks;
+    
+    public int explosionTick;
+    public int explosionMaxTick;
     
 	public EntityBrancher(EntityType<? extends PathfinderMob> p_33002_, Level p_33003_) 
 	{
@@ -43,7 +47,7 @@ public class EntityBrancher extends AbstractAnimatableCreature
     {
         return Mob.createMobAttributes()
     			.add(Attributes.MAX_HEALTH, 30.0F)
-    			.add(Attributes.MOVEMENT_SPEED, 1.2F);
+    			.add(Attributes.MOVEMENT_SPEED, 0.7F);
     }
     
     @Override
@@ -51,13 +55,14 @@ public class EntityBrancher extends AbstractAnimatableCreature
     {
     	super.defineSynchedData();
     	this.entityData.define(ANGER_COUNT, 0);
+    	this.entityData.define(EXPLOSION_MAX_TICK, 0);
     	this.entityData.define(IS_RUNNING, false);
     }
     
     @Override
     protected void registerGoals() 
     {
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.5F));
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.25F));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true)
         {
         	@Override
@@ -126,7 +131,32 @@ public class EntityBrancher extends AbstractAnimatableCreature
     	if(this.isAngry() && this.getTarget() != null)
     	{
     		this.setRunning(true);
-    		this.getNavigation().moveTo(this.getTarget(), 1.0F);
+    		this.getNavigation().moveTo(this.getTarget(), 0.42F);
+    		if(this.distanceTo(this.getTarget()) <= 2.0F)
+    		{
+    			if(this.getAnimationState() == 0)
+    			{
+        			this.setAnimationState(2);
+    			}
+    			this.setExplosionMaxTick(40);
+    		}
+    		else if(this.getAnimationState() == 2)
+    		{
+    			this.setExplosionMaxTick(160);
+    		}
+    	}
+    	
+    	if(this.getAnimationState() == 2)
+    	{
+    		if(this.explosionTick <= this.getExplosionMaxTick())
+    		{
+    			this.explosionTick++;
+    		}
+    		else
+    		{
+    			this.level.explode(this, this.getX(), this.getY(), this.getZ(), 4.0F, Level.ExplosionInteraction.NONE);
+    			this.discard();
+    		}
     	}
     	
     	if(this.getAnimationTick() <= 0)
@@ -144,6 +174,7 @@ public class EntityBrancher extends AbstractAnimatableCreature
     	super.addAdditionalSaveData(p_21484_);
     	p_21484_.putBoolean("isRunning", this.isRunning());
     	p_21484_.putInt("AngerCount", this.getAngerCount());
+    	p_21484_.putInt("ExplosionMaxTick", this.getExplosionMaxTick());
     }
     
     @Override
@@ -158,6 +189,10 @@ public class EntityBrancher extends AbstractAnimatableCreature
     	{
     		this.setAngerCount(p_21450_.getInt("AngerCount"));
     	}
+    	if(p_21450_.contains("ExplosionMaxTick"))
+    	{
+    		this.setExplosionMaxTick(p_21450_.getInt("ExplosionMaxTick"));
+    	}
     }
     
     public void setRunning(boolean value)
@@ -168,6 +203,16 @@ public class EntityBrancher extends AbstractAnimatableCreature
     public boolean isRunning()
     {
     	return this.entityData.get(IS_RUNNING);
+    }
+    
+    public void setExplosionMaxTick(int value)
+    {
+    	this.entityData.set(EXPLOSION_MAX_TICK, value);
+    }
+    
+    public int getExplosionMaxTick()
+    {
+    	return this.entityData.get(EXPLOSION_MAX_TICK);
     }
     
     public void setAngerCount(int value)
