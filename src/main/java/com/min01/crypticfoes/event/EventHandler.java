@@ -5,8 +5,11 @@ import com.min01.crypticfoes.entity.CrypticEntities;
 import com.min01.crypticfoes.entity.living.EntityBrancher;
 import com.min01.crypticfoes.entity.living.EntityPetrified;
 
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
+import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent.Operation;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -23,6 +26,6 @@ public class EventHandler
     @SubscribeEvent
     public static void onSpawnPlacementRegister(SpawnPlacementRegisterEvent event)
     {
-    	
+    	event.register(CrypticEntities.BRANCHER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, EntityBrancher::checkBrancherSpawnRules, Operation.AND);
     }
 }

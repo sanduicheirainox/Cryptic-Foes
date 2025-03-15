@@ -11,19 +11,19 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class FallenLeavesBlock extends LeavesBlock
+public class FallenLeavesBlock extends BushBlock
 {
 	protected static final VoxelShape AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 0.1D, 16.0D);
 	
 	public FallenLeavesBlock() 
 	{
-		super(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_LEAVES).noCollission());
+		super(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_LEAVES).instabreak().noCollission());
 	}
 	
 	@Override
