@@ -22,6 +22,10 @@ public class CrypticCreativeTabs
     			output.accept(CrypticItems.PETRIFIED_SPAWN_EGG.get());
     			output.accept(CrypticItems.BRANCHER_SPAWN_EGG.get());
     			output.accept(CrypticItems.FRAGILE_BONE.get());
+    			output.accept(CrypticItems.UNSTABLE_RESIN.get());
     			output.accept(CrypticItems.FALLEN_LEAVES.get());
+    			output.accept(CrypticItems.BLOCK_OF_FRAGILE_BONES.get());
+    			output.accept(CrypticItems.PILE_OF_FRAGILE_BONES.get());
+    			output.accept(CrypticItems.POLISHED_PILE_OF_FRAGILE_BONES.get());
     		}).build());
 }

@@ -23,7 +23,12 @@ public class CrypticItems
 	public static final RegistryObject<Item> PETRIFIED_SPAWN_EGG = registerSpawnEgg("petrified_spawn_egg", () -> CrypticEntities.PETRIFIED.get(), 13812100, 12029529);
 	public static final RegistryObject<Item> BRANCHER_SPAWN_EGG = registerSpawnEgg("brancher_spawn_egg", () -> CrypticEntities.BRANCHER.get(), 4864030, 2364933);
 	public static final RegistryObject<Item> FRAGILE_BONE = ITEMS.register("fragile_bone", () -> new Item(new Item.Properties()));
+	public static final RegistryObject<Item> UNSTABLE_RESIN = ITEMS.register("unstable_resin", () -> new Item(new Item.Properties()));
+	
 	public static final RegistryObject<Item> FALLEN_LEAVES = registerBlockItem("fallen_leaves", () -> CrypticBlocks.FALLEN_LEAVES.get(), new Item.Properties());
+	public static final RegistryObject<Item> BLOCK_OF_FRAGILE_BONES = registerBlockItem("block_of_fragile_bones", () -> CrypticBlocks.BLOCK_OF_FRAGILE_BONES.get(), new Item.Properties());
+	public static final RegistryObject<Item> PILE_OF_FRAGILE_BONES = registerBlockItem("pile_of_fragile_bones", () -> CrypticBlocks.PILE_OF_FRAGILE_BONES.get(), new Item.Properties());
+	public static final RegistryObject<Item> POLISHED_PILE_OF_FRAGILE_BONES = registerBlockItem("polished_pile_of_fragile_bones", () -> CrypticBlocks.POLISHED_PILE_OF_FRAGILE_BONES.get(), new Item.Properties());
 	
 	public static RegistryObject<Item> registerBlockItem(String name, Supplier<Block> block, Item.Properties properties)
 	{
