@@ -7,6 +7,7 @@ import com.min01.crypticfoes.item.CrypticItems;
 import com.min01.crypticfoes.misc.CrypticCreativeTabs;
 import com.min01.crypticfoes.misc.CrypticEntityDataSerializers;
 import com.min01.crypticfoes.network.CrypticNetwork;
+import com.min01.crypticfoes.particle.CrypticParticles;
 
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -25,8 +26,10 @@ public class CrypticFoes
 		CrypticItems.ITEMS.register(bus);
 		CrypticEntityDataSerializers.SERIALIZERS.register(bus);
 		CrypticEffects.EFFECTS.register(bus);
+		CrypticEffects.POTIONS.register(bus);
 		CrypticBlocks.BLOCKS.register(bus);
 		CrypticCreativeTabs.CREATIVE_MODE_TAB.register(bus);
+		CrypticParticles.PARTICLES.register(bus);
 		
 		CrypticNetwork.registerMessages();
 	}

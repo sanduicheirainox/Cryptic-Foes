@@ -40,7 +40,7 @@ public class FallenLeavesBlock extends BushBlock
 		{
 			if(!(living instanceof EntityBrancher))
 			{
-				List<EntityBrancher> list = p_60496_.getEntitiesOfClass(EntityBrancher.class, living.getBoundingBox().inflate(5.0F), t -> !t.isAngry());
+				List<EntityBrancher> list = p_60496_.getEntitiesOfClass(EntityBrancher.class, living.getBoundingBox().inflate(12.5F), t -> !t.isAngry());
 				list.forEach(t -> 
 				{
 					t.setAngerCount(t.getAngerCount() + 1);

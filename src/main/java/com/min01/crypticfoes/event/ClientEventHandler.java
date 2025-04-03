@@ -8,9 +8,13 @@ import com.min01.crypticfoes.entity.model.ModelPetrifiedStone;
 import com.min01.crypticfoes.entity.renderer.BrancherRenderer;
 import com.min01.crypticfoes.entity.renderer.PetrifiedRenderer;
 import com.min01.crypticfoes.entity.renderer.PetrifiedStoneRenderer;
+import com.min01.crypticfoes.particle.BrancherExplosionParticle;
+import com.min01.crypticfoes.particle.BrancherExplosionSeedParticle;
+import com.min01.crypticfoes.particle.CrypticParticles;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -32,4 +36,11 @@ public class ClientEventHandler
     	event.registerLayerDefinition(ModelPetrifiedStone.LAYER_LOCATION, ModelPetrifiedStone::createBodyLayer);
     	event.registerLayerDefinition(ModelBrancher.LAYER_LOCATION, ModelBrancher::createBodyLayer);
     }
+    
+	@SubscribeEvent
+	public static void onRegisterParticleProviders(RegisterParticleProvidersEvent event)
+	{
+		event.registerSpriteSet(CrypticParticles.BRANCHER_EXPLOSION.get(), BrancherExplosionParticle.Provider::new);
+		event.registerSpecial(CrypticParticles.BRANCHER_EXPLOSION_SEED.get(), new BrancherExplosionSeedParticle.Provider());
+	}
 }

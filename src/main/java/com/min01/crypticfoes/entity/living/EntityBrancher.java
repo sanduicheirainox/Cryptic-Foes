@@ -1,6 +1,8 @@
 package com.min01.crypticfoes.entity.living;
 
 import com.min01.crypticfoes.entity.AbstractAnimatableCreature;
+import com.min01.crypticfoes.misc.CrypticExplosion;
+import com.min01.crypticfoes.particle.CrypticParticles;
 import com.min01.crypticfoes.util.CrypticUtil;
 
 import net.minecraft.core.BlockPos;
@@ -25,6 +27,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.phys.Vec3;
 
 public class EntityBrancher extends AbstractAnimatableCreature
 {
@@ -160,7 +163,7 @@ public class EntityBrancher extends AbstractAnimatableCreature
     		}
     		else
     		{
-    			this.level.explode(this, this.getX(), this.getY(), this.getZ(), 4.0F, Level.ExplosionInteraction.NONE);
+    			this.brancherExplode(this.position(), 2.0F);
     			this.discard();
     		}
     	}
@@ -172,6 +175,13 @@ public class EntityBrancher extends AbstractAnimatableCreature
         		this.setAnimationState(0);
         	}
     	}
+    }
+    
+    public void brancherExplode(Vec3 pos, float radius)
+    {
+        CrypticExplosion explosion = new CrypticExplosion(this.level, this, pos.x, pos.y, pos.z, radius, CrypticParticles.BRANCHER_EXPLOSION_SEED.get());
+        explosion.explode();
+        explosion.finalizeExplosion(false);
     }
     
     public static boolean checkBrancherSpawnRules(EntityType<EntityBrancher> p_219014_, ServerLevelAccessor p_219015_, MobSpawnType p_219016_, BlockPos p_219017_, RandomSource p_219018_)

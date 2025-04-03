@@ -1,6 +1,8 @@
 package com.min01.crypticfoes.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
@@ -22,15 +24,16 @@ public class PileofFragileBonesBlock extends Block
 	{
 		if(!p_152434_.isSteppingCarefully() && p_152434_ instanceof LivingEntity)
 		{
-			if(!p_152431_.isClientSide)
-			{
-				if(p_152433_.is(CrypticBlocks.PILE_OF_FRAGILE_BONES.get()) || p_152433_.is(CrypticBlocks.POLISHED_PILE_OF_FRAGILE_BONES.get()))
-				{
-					p_152431_.destroyBlock(p_152432_, false);
-					p_152431_.gameEvent(GameEvent.BLOCK_DESTROY, p_152432_, GameEvent.Context.of(p_152433_));
-					p_152431_.levelEvent(2001, p_152432_, Block.getId(p_152433_));
-				}
-			}
+			int tick = p_152433_.is(CrypticBlocks.POLISHED_PILE_OF_FRAGILE_BONES.get()) ? 5 : 2;
+			p_152431_.scheduleTick(p_152432_, this, tick);
 		}
+	}
+	
+	@Override
+	public void tick(BlockState p_222945_, ServerLevel p_222946_, BlockPos p_222947_, RandomSource p_222948_) 
+	{
+		p_222946_.destroyBlock(p_222947_, false);
+		p_222946_.gameEvent(GameEvent.BLOCK_DESTROY, p_222947_, GameEvent.Context.of(p_222945_));
+		p_222946_.levelEvent(2001, p_222947_, Block.getId(p_222945_));
 	}
 }

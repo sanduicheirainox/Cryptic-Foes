@@ -32,6 +32,10 @@ public class BrancherLayer extends RenderLayer<EntityBrancher, ModelBrancher>
 	        strength += Mth.lerp(ageInTicks, entity.brightnessOld, entity.brightness) * Mth.PI;
 	        strength = Mth.clamp(strength, 0.0F, 1.0F);
 	        strength *= entity.getAngerCount() / 2.0F;
+	        if(entity.explosionTick > 0)
+	        {
+	        	strength = 1.0F;
+	        }
 			this.getParentModel().renderToBuffer(poseStack, consumer, packedLight, LivingEntityRenderer.getOverlayCoords(entity, 0.0F), strength, strength, strength, 1.0F);
 		}
 	}

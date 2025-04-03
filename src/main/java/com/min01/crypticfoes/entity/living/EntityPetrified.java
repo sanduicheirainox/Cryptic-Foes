@@ -46,7 +46,8 @@ public class EntityPetrified extends AbstractAnimatableMonster
     {
         return Monster.createMonsterAttributes()
     			.add(Attributes.MAX_HEALTH, 20.0F)
-    			.add(Attributes.MOVEMENT_SPEED, 0.25F);
+    			.add(Attributes.MOVEMENT_SPEED, 0.25F)
+    			.add(Attributes.FOLLOW_RANGE, 32.0F);
     }
     
     @Override
