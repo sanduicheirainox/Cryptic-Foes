@@ -1,0 +1,8 @@
+{
+	"parent": "minecraft:block/slab",
+	"textures": {
+		"bottom": "crypticfoes:block/polished_pile_of_fragile_bones",
+		"side": "crypticfoes:block/polished_pile_of_fragile_bones",
+		"top": "crypticfoes:block/polished_pile_of_fragile_bones"
+	}
+}

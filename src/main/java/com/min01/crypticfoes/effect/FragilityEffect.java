@@ -11,7 +11,7 @@ public class FragilityEffect extends MobEffect
 {
 	public FragilityEffect()
 	{
-		super(MobEffectCategory.HARMFUL, 0);
+		super(MobEffectCategory.HARMFUL, 10129001);
 		this.addAttributeModifier(Attributes.ARMOR, UUID.randomUUID().toString(), -4.0F, Operation.ADDITION);
 	}
 	

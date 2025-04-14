@@ -14,6 +14,10 @@
 	"block.crypticfoes.fallen_leaves": "Fallen Leaves",
 	"block.crypticfoes.pile_of_fragile_bones": "Pile of Fragile Bones",
 	"block.crypticfoes.polished_pile_of_fragile_bones": "Polished Pile of Fragile Bones",
+	"block.crypticfoes.waxed_pile_of_fragile_bones": "Waxed Pile of Fragile Bones",
+	"block.crypticfoes.waxed_polished_pile_of_fragile_bones": "Waxed Polished Pile of Fragile Bones",
+	"block.crypticfoes.pile_of_fragile_bones_slab": "Pile of Fragile Bones Slab",
+	"block.crypticfoes.polished_pile_of_fragile_bones_slab": "Polished Pile of Fragile Bones Slab",
 	"block.crypticfoes.block_of_fragile_bones": "Block of Fragile Bones",
 	"effect.crypticfoes.fragility": "Fragility",
 	"effect.crypticfoes.description": "reduce armor point"

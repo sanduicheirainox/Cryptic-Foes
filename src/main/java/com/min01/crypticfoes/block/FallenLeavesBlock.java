@@ -3,6 +3,7 @@ package com.min01.crypticfoes.block;
 import java.util.List;
 
 import com.min01.crypticfoes.entity.living.EntityBrancher;
+import com.min01.crypticfoes.sound.CrypticSounds;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
@@ -23,7 +24,7 @@ public class FallenLeavesBlock extends BushBlock
 	
 	public FallenLeavesBlock() 
 	{
-		super(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_LEAVES).instabreak().noCollission());
+		super(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_LEAVES).sound(CrypticSounds.FALLEN_LEAVES).instabreak());
 	}
 	
 	@Override
@@ -49,5 +50,11 @@ public class FallenLeavesBlock extends BushBlock
 				});
 			}
 		}
+	}
+	
+	@Override
+	protected boolean mayPlaceOn(BlockState p_51042_, BlockGetter p_51043_, BlockPos p_51044_) 
+	{
+		return true;
 	}
 }

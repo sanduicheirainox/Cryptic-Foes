@@ -5,7 +5,6 @@ import com.min01.crypticfoes.entity.living.EntityPetrified;
 import com.min01.crypticfoes.entity.projectile.EntityPetrifiedStone;
 import com.min01.crypticfoes.util.CrypticUtil;
 
-import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 
 public class PetrifiedShootStoneGoal extends BasicAnimationSkillGoal<EntityPetrified>
@@ -25,7 +24,7 @@ public class PetrifiedShootStoneGoal extends BasicAnimationSkillGoal<EntityPetri
 	@Override
 	public boolean additionalStartCondition() 
 	{
-		return this.mob.distanceTo(this.mob.getTarget()) <= 20.0F && this.mob.distanceTo(this.mob.getTarget()) >= 6.0F && this.mob.hasStone();
+		return this.mob.distanceTo(this.mob.getTarget()) <= 40.0F && this.mob.distanceTo(this.mob.getTarget()) >= 6.0F && this.mob.hasStone();
 	}
 	
 	@Override
@@ -36,7 +35,7 @@ public class PetrifiedShootStoneGoal extends BasicAnimationSkillGoal<EntityPetri
 			EntityPetrifiedStone stone = new EntityPetrifiedStone(CrypticEntities.PETRIFIED_STONE.get(), this.mob.level);
 			stone.setPos(this.mob.posArray[0]);
 			stone.setOwner(this.mob);
-			Vec3 lookPos = CrypticUtil.getLookPos(new Vec2(this.mob.getXRot(), this.mob.getYHeadRot()), this.mob.posArray[0], 0.0F, 2.5F, 2.0F);
+			Vec3 lookPos = CrypticUtil.getLookPos(this.mob.getRotationVector(), this.mob.posArray[0], 0.0F, 2.5F, 2.0F);
 			stone.setDeltaMovement(CrypticUtil.fromToVector(stone.position(), lookPos, 0.65F));
 			this.mob.level.addFreshEntity(stone);
 			this.mob.setHasStone(false);

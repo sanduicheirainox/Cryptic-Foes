@@ -3,6 +3,7 @@ package com.min01.crypticfoes.entity.living;
 import com.min01.crypticfoes.entity.AbstractAnimatableCreature;
 import com.min01.crypticfoes.misc.CrypticExplosion;
 import com.min01.crypticfoes.particle.CrypticParticles;
+import com.min01.crypticfoes.sound.CrypticSounds;
 import com.min01.crypticfoes.util.CrypticUtil;
 
 import net.minecraft.core.BlockPos;
@@ -10,8 +11,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -87,6 +90,7 @@ public class EntityBrancher extends AbstractAnimatableCreature
         	{
         		super.start();
         		EntityBrancher.this.setAngerCount(2);
+        		EntityBrancher.this.playSound(CrypticSounds.BRANCHER_ANGRY.get());
         	}
         });
     }
@@ -160,10 +164,15 @@ public class EntityBrancher extends AbstractAnimatableCreature
     		if(this.explosionTick <= this.getExplosionMaxTick())
     		{
     			this.explosionTick++;
+    			if(this.explosionTick % 20 == 0)
+    			{
+        	        this.playSound(CrypticSounds.BRANCHER_HEARTBEAT.get());
+    			}
     		}
     		else
     		{
     			this.brancherExplode(this.position(), 2.0F);
+    	        this.playSound(CrypticSounds.BRANCHER_HISS.get());
     			this.discard();
     		}
     	}
@@ -182,6 +191,7 @@ public class EntityBrancher extends AbstractAnimatableCreature
         CrypticExplosion explosion = new CrypticExplosion(this.level, this, pos.x, pos.y, pos.z, radius, CrypticParticles.BRANCHER_EXPLOSION_SEED.get());
         explosion.explode();
         explosion.finalizeExplosion(false);
+        this.playSound(CrypticSounds.BRANCHER_EXPLOSION.get());
     }
     
     public static boolean checkBrancherSpawnRules(EntityType<EntityBrancher> p_219014_, ServerLevelAccessor p_219015_, MobSpawnType p_219016_, BlockPos p_219017_, RandomSource p_219018_)
@@ -216,6 +226,18 @@ public class EntityBrancher extends AbstractAnimatableCreature
     	}
     }
     
+    @Override
+    protected SoundEvent getDeathSound()
+    {
+    	return CrypticSounds.BRANCHER_DEATH.get();
+    }
+    
+    @Override
+    protected SoundEvent getHurtSound(DamageSource p_21239_) 
+    {
+    	return CrypticSounds.BRANCHER_HURT.get();
+    }
+    
     public void setRunning(boolean value)
     {
     	this.entityData.set(IS_RUNNING, value);
@@ -239,6 +261,10 @@ public class EntityBrancher extends AbstractAnimatableCreature
     public void setAngerCount(int value)
     {
     	this.entityData.set(ANGER_COUNT, value);
+    	if(value == 2)
+    	{
+    		this.playSound(CrypticSounds.BRANCHER_ANGRY.get());
+    	}
     }
     
     public int getAngerCount()

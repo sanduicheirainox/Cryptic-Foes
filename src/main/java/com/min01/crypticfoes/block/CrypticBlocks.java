@@ -18,4 +18,8 @@ public class CrypticBlocks
 	public static final RegistryObject<Block> BLOCK_OF_FRAGILE_BONES = BLOCKS.register("block_of_fragile_bones", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.BONE_BLOCK)));
 	public static final RegistryObject<Block> PILE_OF_FRAGILE_BONES = BLOCKS.register("pile_of_fragile_bones", () -> new PileofFragileBonesBlock());
 	public static final RegistryObject<Block> POLISHED_PILE_OF_FRAGILE_BONES = BLOCKS.register("polished_pile_of_fragile_bones", () -> new PileofFragileBonesBlock());
+	public static final RegistryObject<Block> WAXED_PILE_OF_FRAGILE_BONES = BLOCKS.register("waxed_pile_of_fragile_bones", () -> new Block(BlockBehaviour.Properties.copy(Blocks.BONE_BLOCK)));
+	public static final RegistryObject<Block> WAXED_POLISHED_PILE_OF_FRAGILE_BONES = BLOCKS.register("waxed_polished_pile_of_fragile_bones", () -> new Block(BlockBehaviour.Properties.copy(Blocks.BONE_BLOCK)));
+    public static final RegistryObject<Block> PILE_OF_FRAGILE_BONES_SLAB = BLOCKS.register("pile_of_fragile_bones_slab", () -> new PileofFragileBonesSlabBlock());
+    public static final RegistryObject<Block> POLISHED_PILE_OF_FRAGILE_BONES_SLAB = BLOCKS.register("polished_pile_of_fragile_bones_slab", () -> new PileofFragileBonesSlabBlock());
 }
