@@ -5,7 +5,6 @@ import java.util.function.Supplier;
 
 import com.min01.crypticfoes.entity.IPosArray;
 import com.min01.crypticfoes.misc.CrypticEntityDataSerializers;
-import com.min01.crypticfoes.util.CrypticClientUtil;
 import com.min01.crypticfoes.util.CrypticUtil;
 
 import net.minecraft.network.FriendlyByteBuf;
@@ -56,11 +55,14 @@ public class UpdatePosArrayPacket
 				}
 				else
 				{
-					Entity entity = CrypticUtil.getEntityByUUID(CrypticClientUtil.MC.level, message.entityUUID);
-					if(entity instanceof IPosArray mob) 
+					CrypticUtil.getClientLevel(t -> 
 					{
-						mob.getPosArray()[message.array] = message.pos;
-					}
+						Entity entity = CrypticUtil.getEntityByUUID(t, message.entityUUID);
+						if(entity instanceof IPosArray mob) 
+						{
+							mob.getPosArray()[message.array] = message.pos;
+						}
+					});
 				}
 			});
 			ctx.get().setPacketHandled(true);
