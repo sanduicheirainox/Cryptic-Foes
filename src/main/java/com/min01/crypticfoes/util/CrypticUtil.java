@@ -5,8 +5,11 @@ import java.util.UUID;
 import java.util.function.Consumer;
 
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.entity.LevelEntityGetter;
 import net.minecraft.world.phys.Vec2;
@@ -17,6 +20,34 @@ import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
 public class CrypticUtil 
 {
+	public static final Method GET_ENTITY = ObfuscationReflectionHelper.findMethod(Level.class, "m_142646_");
+	
+	@SuppressWarnings("deprecation")
+	public static BlockPos getCeilingPos(BlockGetter pLevel, double pX, double startY, double pZ, int aboveY)
+    {
+        BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos(pX, startY, pZ);
+        do
+        {
+        	blockpos$mutable.move(Direction.UP);
+        }
+        while((pLevel.getBlockState(blockpos$mutable).isAir() || pLevel.getBlockState(blockpos$mutable).liquid() || !pLevel.getBlockState(blockpos$mutable).isCollisionShapeFullBlock(pLevel, blockpos$mutable)) && blockpos$mutable.getY() < pLevel.getMaxBuildHeight());
+        BlockPos pos = blockpos$mutable.above().above(aboveY);
+        return pos;
+    }
+	
+	@SuppressWarnings("deprecation")
+	public static BlockPos getGroundPos(BlockGetter pLevel, double pX, double startY, double pZ, int belowY)
+    {
+        BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos(pX, startY, pZ);
+        do
+        {
+        	blockpos$mutable.move(Direction.DOWN);
+        }
+        while((pLevel.getBlockState(blockpos$mutable).isAir() || pLevel.getBlockState(blockpos$mutable).liquid() || !pLevel.getBlockState(blockpos$mutable).isCollisionShapeFullBlock(pLevel, blockpos$mutable)) && blockpos$mutable.getY() > pLevel.getMinBuildHeight());
+        BlockPos pos = blockpos$mutable.below().below(belowY);
+        return pos;
+    }
+	
 	public static void getClientLevel(Consumer<Level> consumer)
 	{
 		LogicalSidedProvider.CLIENTWORLD.get(LogicalSide.CLIENT).filter(ClientLevel.class::isInstance).ifPresent(level -> 
@@ -58,10 +89,9 @@ public class CrypticUtil
 	@SuppressWarnings("unchecked")
 	public static <T extends Entity> T getEntityByUUID(Level level, UUID uuid)
 	{
-		Method m = ObfuscationReflectionHelper.findMethod(Level.class, "m_142646_");
 		try 
 		{
-			LevelEntityGetter<Entity> entities = (LevelEntityGetter<Entity>) m.invoke(level);
+			LevelEntityGetter<Entity> entities = (LevelEntityGetter<Entity>) GET_ENTITY.invoke(level);
 			return (T) entities.get(uuid);
 		}
 		catch (Exception e) 

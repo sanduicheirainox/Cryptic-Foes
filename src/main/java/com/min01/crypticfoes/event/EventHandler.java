@@ -4,6 +4,7 @@ import com.min01.crypticfoes.CrypticFoes;
 import com.min01.crypticfoes.effect.CrypticEffects;
 import com.min01.crypticfoes.entity.CrypticEntities;
 import com.min01.crypticfoes.entity.living.EntityBrancher;
+import com.min01.crypticfoes.entity.living.EntityHowler;
 import com.min01.crypticfoes.entity.living.EntityPetrified;
 import com.min01.crypticfoes.item.CrypticItems;
 
@@ -38,6 +39,7 @@ public class EventHandler
     {
     	event.put(CrypticEntities.PETRIFIED.get(), EntityPetrified.createAttributes().build());
     	event.put(CrypticEntities.BRANCHER.get(), EntityBrancher.createAttributes().build());
+    	event.put(CrypticEntities.HOWLER.get(), EntityHowler.createAttributes().build());
     }
     
     @SubscribeEvent

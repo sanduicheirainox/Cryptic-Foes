@@ -38,5 +38,4 @@ public class PetrifiedStoneRenderer extends EntityRenderer<EntityPetrifiedStone>
 	{
 		return new ResourceLocation(CrypticFoes.MODID, "textures/entity/petrified.png");
 	}
-
 }

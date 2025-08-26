@@ -150,7 +150,6 @@ public class EntityPetrified extends AbstractAnimatableMonster
     			if(this.hasStone())
     			{
         			this.getLookControl().setLookAt(this.getTarget(), 30.0F, 30.0F);
-        			this.lookAt(this.getTarget(), 30.0F, 30.0F);
     			}
     		}
 			if(this.canMove())

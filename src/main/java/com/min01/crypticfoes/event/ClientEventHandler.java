@@ -3,9 +3,12 @@ package com.min01.crypticfoes.event;
 import com.min01.crypticfoes.CrypticFoes;
 import com.min01.crypticfoes.entity.CrypticEntities;
 import com.min01.crypticfoes.entity.model.ModelBrancher;
+import com.min01.crypticfoes.entity.model.ModelHowler;
 import com.min01.crypticfoes.entity.model.ModelPetrified;
 import com.min01.crypticfoes.entity.model.ModelPetrifiedStone;
 import com.min01.crypticfoes.entity.renderer.BrancherRenderer;
+import com.min01.crypticfoes.entity.renderer.HowlerRenderer;
+import com.min01.crypticfoes.entity.renderer.HowlerScreamRenderer;
 import com.min01.crypticfoes.entity.renderer.PetrifiedRenderer;
 import com.min01.crypticfoes.entity.renderer.PetrifiedStoneRenderer;
 import com.min01.crypticfoes.particle.BrancherExplosionParticle;
@@ -34,6 +37,8 @@ public class ClientEventHandler
 		event.registerEntityRenderer(CrypticEntities.PETRIFIED.get(), PetrifiedRenderer::new);
 		event.registerEntityRenderer(CrypticEntities.PETRIFIED_STONE.get(), PetrifiedStoneRenderer::new);
 		event.registerEntityRenderer(CrypticEntities.BRANCHER.get(), BrancherRenderer::new);
+		event.registerEntityRenderer(CrypticEntities.HOWLER.get(), HowlerRenderer::new);
+		event.registerEntityRenderer(CrypticEntities.HOWLER_SCREAM.get(), HowlerScreamRenderer::new);
 	}
 	
     @SubscribeEvent
@@ -42,6 +47,7 @@ public class ClientEventHandler
     	event.registerLayerDefinition(ModelPetrified.LAYER_LOCATION, ModelPetrified::createBodyLayer);
     	event.registerLayerDefinition(ModelPetrifiedStone.LAYER_LOCATION, ModelPetrifiedStone::createBodyLayer);
     	event.registerLayerDefinition(ModelBrancher.LAYER_LOCATION, ModelBrancher::createBodyLayer);
+    	event.registerLayerDefinition(ModelHowler.LAYER_LOCATION, ModelHowler::createBodyLayer);
     }
     
 	@SubscribeEvent

@@ -15,6 +15,7 @@ public class CrypticEffects
 	public static final DeferredRegister<Potion> POTIONS = DeferredRegister.create(ForgeRegistries.POTIONS, CrypticFoes.MODID);
 	
 	public static final RegistryObject<MobEffect> FRAGILITY = EFFECTS.register("fragility", () -> new FragilityEffect());
+	public static final RegistryObject<MobEffect> STUNNED = EFFECTS.register("stunned", () -> new StunnedEffect());
 	
 	public static final RegistryObject<Potion> FRAGILITY_POTION = POTIONS.register("fragility", () -> new Potion(new MobEffectInstance(FRAGILITY.get(), 3600)));
 }

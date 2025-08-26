@@ -1,5 +1,8 @@
 package com.min01.crypticfoes;
 
+import java.io.IOException;
+
+import com.min01.crypticdep.CrypticUtil;
 import com.min01.crypticfoes.block.CrypticBlocks;
 import com.min01.crypticfoes.effect.CrypticEffects;
 import com.min01.crypticfoes.entity.CrypticEntities;
@@ -36,5 +39,14 @@ public class CrypticFoes
 		CrypticPaintings.PAINTING_VARIANTS.register(bus);
 		
 		CrypticNetwork.registerMessages();
+		
+		try
+		{
+			CrypticUtil.load("crypticfoes");
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
 	}
 }

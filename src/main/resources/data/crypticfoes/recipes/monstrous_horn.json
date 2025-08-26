@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "building",
+	"group": "bark",
+	"key": {
+		"H": {
+			"item": "crypticfoes:howler_membrane"
+		},
+		"I": {
+			"item": "minecraft:iron_ingot"
+		},
+		"G": {
+			"item": "minecraft:goat_horn"
+		}
+	},
+	"pattern": [
+		" H ",
+		"IGH",
+		" II"
+	],
+	"result": {
+		"count": 1,
+		"item": "crypticfoes:monstrous_horn"
+	},
+	"show_notification": true
+}
