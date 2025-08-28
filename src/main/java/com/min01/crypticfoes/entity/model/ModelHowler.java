@@ -105,14 +105,22 @@ public class ModelHowler extends HierarchicalModel<EntityHowler>
 	public void setupAnim(EntityHowler entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) 
 	{
 		this.root().getAllParts().forEach(ModelPart::resetPose);
-		
 		if(!entity.isHowlerSleeping())
 		{
 			CrypticClientUtil.animateHead(this.head, netHeadYaw, headPitch);
 			this.animateWalk(HowlerAnimation.HOWLER_WALK, limbSwing, limbSwingAmount, 2.5F, 2.5F);
 		}
-		this.animate(entity.idleAnimationState, HowlerAnimation.HOWLER_IDLE, ageInTicks);
-		this.animate(entity.sleepAnimationState, HowlerAnimation.HOWLER_SLEEP, ageInTicks);
+		
+		entity.idleAnimationState.ifStarted(t ->
+		{
+			this.animateWalk(HowlerAnimation.HOWLER_IDLE, ageInTicks, 1.0F - limbSwingAmount - entity.factor, 1.0F, 1.0F);
+		});
+		
+		entity.sleepAnimationState.ifStarted(t ->
+		{
+			this.animateWalk(HowlerAnimation.HOWLER_SLEEP, ageInTicks, 1.0F - limbSwingAmount, 1.0F, 1.0F);
+		});
+		
 		this.animate(entity.awakeAnimationState, HowlerAnimation.HOWLER_AWAKE, ageInTicks);
 		this.animate(entity.fallAnimationState, HowlerAnimation.HOWLER_FALL, ageInTicks);
 		this.animate(entity.landAnimationState, HowlerAnimation.HOWLER_LAND, ageInTicks);

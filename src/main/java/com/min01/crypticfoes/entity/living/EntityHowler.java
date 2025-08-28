@@ -1,5 +1,8 @@
 package com.min01.crypticfoes.entity.living;
 
+import java.util.List;
+
+import com.min01.crypticfoes.effect.CrypticEffects;
 import com.min01.crypticfoes.entity.AbstractAnimatableMonster;
 import com.min01.crypticfoes.entity.ai.goal.HowlerPunchGoal;
 import com.min01.crypticfoes.entity.ai.goal.HowlerRoarGoal;
@@ -12,9 +15,11 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.AnimationState;
+import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -34,7 +39,7 @@ public class EntityHowler extends AbstractAnimatableMonster
 	public static final EntityDataAccessor<Boolean> IS_SLEEPING = SynchedEntityData.defineId(EntityHowler.class, EntityDataSerializers.BOOLEAN);
 	public static final EntityDataAccessor<Boolean> IS_FALLING = SynchedEntityData.defineId(EntityHowler.class, EntityDataSerializers.BOOLEAN);
 	public static final EntityDataAccessor<BlockPos> SLEEP_POS = SynchedEntityData.defineId(EntityHowler.class, EntityDataSerializers.BLOCK_POS);
-	
+
 	public final AnimationState idleAnimationState = new AnimationState();
 	public final AnimationState sleepAnimationState = new AnimationState();
 	public final AnimationState awakeAnimationState = new AnimationState();
@@ -45,7 +50,9 @@ public class EntityHowler extends AbstractAnimatableMonster
 	public final AnimationState punchAnimationState = new AnimationState();
 	
 	public int ambientTick;
-	public int targetTick;
+	public int targetTick = 200;
+	
+	public float factor;
 	
 	public EntityHowler(EntityType<? extends Monster> p_33002_, Level p_33003_) 
 	{
@@ -56,12 +63,12 @@ public class EntityHowler extends AbstractAnimatableMonster
     public static AttributeSupplier.Builder createAttributes()
     {
         return Monster.createMonsterAttributes()
-    			.add(Attributes.MAX_HEALTH, 30.0F)
-    			.add(Attributes.ARMOR, 4.0F)
+    			.add(Attributes.MAX_HEALTH, 40.0F)
+    			.add(Attributes.ARMOR, 10.0F)
     			.add(Attributes.ATTACK_DAMAGE, 10.0F)
     			.add(Attributes.KNOCKBACK_RESISTANCE, 100.0F)
-    			.add(Attributes.MOVEMENT_SPEED, 0.25F)
-    			.add(Attributes.FOLLOW_RANGE, 100.0F);
+    			.add(Attributes.MOVEMENT_SPEED, 0.35F)
+    			.add(Attributes.FOLLOW_RANGE, 32.0F);
     }
     
     @Override
@@ -93,7 +100,7 @@ public class EntityHowler extends AbstractAnimatableMonster
         });
         this.goalSelector.addGoal(0, new HowlerPunchGoal(this));
         this.goalSelector.addGoal(0, new HowlerRoarGoal(this));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, false) 
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true) 
         {
         	@Override
         	public boolean canUse() 
@@ -102,9 +109,17 @@ public class EntityHowler extends AbstractAnimatableMonster
         	}
         	
         	@Override
-        	protected AABB getTargetSearchArea(double p_26069_) 
+        	protected void findTarget() 
         	{
-        		return this.mob.getBoundingBox().inflate(3, 64, 3);
+        		AABB aabb = this.mob.getBoundingBox().inflate(3.0D, 64.0D, 3.0D);
+        		List<Player> list = this.mob.level.getEntitiesOfClass(Player.class, aabb);
+        		if(!list.isEmpty())
+        		{
+        			if(EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(list.get(0)))
+        			{
+            			this.target = list.get(0);
+        			}
+        		}
         	}
         });
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
@@ -183,9 +198,21 @@ public class EntityHowler extends AbstractAnimatableMonster
     	
     	if(this.level.isClientSide)
     	{
-    		this.idleAnimationState.animateWhen(!this.isHowlerSleeping() && !CrypticUtil.isMoving(this) && this.getAnimationState() == 0, this.tickCount);
+    		this.idleAnimationState.animateWhen(!this.isHowlerSleeping() && (this.getAnimationState() == 0 || this.getAnimationState() == 4), this.tickCount);
     		this.blinkAnimationState.animateWhen(!this.isHowlerSleeping() && this.ambientTick > 0, this.tickCount);
     		this.fallAnimationState.animateWhen(!this.isHowlerSleeping() && this.isFalling(), this.tickCount);
+        	
+        	//TODO
+        	if(this.getAnimationState() == 4)
+        	{
+        		this.factor += 0.1F;
+        	}
+        	else
+        	{
+        		this.factor -= 0.1F;
+        	}
+        	
+        	this.factor = Mth.clamp(this.factor, 0.0F, 1.0F);
     	}
     	if(this.ambientTick > 0)
     	{
@@ -211,15 +238,18 @@ public class EntityHowler extends AbstractAnimatableMonster
     					this.getNavigation().moveTo(this.getTarget(), 1.0F);
         			}
         		}
-        		if(this.targetTick >= 2 && !this.level.canSeeSky(this.blockPosition()) && this.getAnimationState() == 0)
+        		if(this.targetTick >= 200 && !this.level.canSeeSky(this.blockPosition()) && this.getAnimationState() == 0)
         		{
         			BlockPos ceilingPos = CrypticUtil.getCeilingPos(this.level, this.getX(), this.getY(), this.getZ(), -4);
-        			this.setSleepPos(ceilingPos);
-        			this.setAnimationState(1);
-        			this.setAnimationTick(40);
-        			this.setCanMove(false);
-        			this.setCanLook(false);
-        			this.setHowlerSleeping(true);
+        			if(!this.level.canSeeSky(ceilingPos))
+        			{
+            			this.setSleepPos(ceilingPos);
+            			this.setAnimationState(1);
+            			this.setAnimationTick(40);
+            			this.setCanMove(false);
+            			this.setCanLook(false);
+            			this.setHowlerSleeping(true);
+        			}
         		}
         	}
         	if(this.onGround())
@@ -240,7 +270,7 @@ public class EntityHowler extends AbstractAnimatableMonster
     	}
     	else if(!this.getSleepPos().equals(BlockPos.ZERO))
     	{
-    		if(!this.isFalling())
+    		if(!this.isFalling() && !this.hasEffect(CrypticEffects.STUNNED.get()))
     		{
         		BlockPos pos = this.getSleepPos();
         		this.setPos(pos.getX(), pos.getY(), pos.getZ());
@@ -253,6 +283,12 @@ public class EntityHowler extends AbstractAnimatableMonster
         			this.setAnimationState(0);
         		}
     		}
+    	}
+    	if(this.isHowlerSleeping() && this.getAnimationState() == 1 && this.getTarget() != null)
+    	{
+			this.targetTick = 0;
+			this.setAnimationState(2);
+			this.setAnimationTick(60);
     	}
     }
     
@@ -267,8 +303,23 @@ public class EntityHowler extends AbstractAnimatableMonster
     }
     
     @Override
+    protected void updateWalkAnimation(float p_268283_) 
+    {
+        float f = Math.min(p_268283_ * 4.0F, 1.0F);
+        if(this.isHowlerSleeping())
+        {
+        	f = 0.0F;
+        }
+        this.walkAnimation.update(f, 0.4F);
+    }
+    
+    @Override
     public boolean hurt(DamageSource p_21016_, float p_21017_) 
     {
+    	if(this.getAnimationState() == 3 || this.getAnimationState() == 4 || this.getAnimationState() == 5)
+    	{
+    		p_21017_ *= 0.5F;
+    	}
     	if(p_21016_.is(DamageTypeTags.IS_FALL))
     	{
     		return false;
@@ -280,7 +331,7 @@ public class EntityHowler extends AbstractAnimatableMonster
 				return false;
 			}
 		}
-    	if(this.isHowlerSleeping())
+    	if(this.isHowlerSleeping() && this.getAnimationState() == 1)
     	{
     		if(p_21016_.getDirectEntity() != null)
     		{

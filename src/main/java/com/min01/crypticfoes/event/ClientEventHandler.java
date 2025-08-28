@@ -11,10 +11,15 @@ import com.min01.crypticfoes.entity.renderer.HowlerRenderer;
 import com.min01.crypticfoes.entity.renderer.HowlerScreamRenderer;
 import com.min01.crypticfoes.entity.renderer.PetrifiedRenderer;
 import com.min01.crypticfoes.entity.renderer.PetrifiedStoneRenderer;
+import com.min01.crypticfoes.item.CrypticItems;
+import com.min01.crypticfoes.item.MonstrousHornItem;
 import com.min01.crypticfoes.particle.BrancherExplosionParticle;
 import com.min01.crypticfoes.particle.BrancherExplosionSeedParticle;
 import com.min01.crypticfoes.particle.CrypticParticles;
 
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
@@ -28,7 +33,10 @@ public class ClientEventHandler
 	@SubscribeEvent
 	public static void onFMLClientSetup(FMLClientSetupEvent event)
 	{
-		
+        ItemProperties.register(CrypticItems.MONSTROUS_HORN.get(), new ResourceLocation("charge"), (p_174585_, p_174586_, p_174587_, p_174588_) ->
+        {
+        	return Mth.floor(MonstrousHornItem.getHornCharge(p_174585_) / 2);
+        });
 	}
 	
 	@SubscribeEvent

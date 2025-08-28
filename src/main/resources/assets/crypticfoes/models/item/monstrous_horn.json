@@ -1,6 +1,26 @@
 {
 	"parent": "minecraft:item/generated",
 	"textures": {
-		"layer0": "crypticfoes:item/monstrous_horn"
-	}
+		"layer0": "crypticfoes:item/monstrous_horn_phase_1"
+	},
+	"overrides": [
+		{
+			"predicate": {
+				"charge": 1
+			},
+			"model": "crypticfoes:item/monstrous_horn_phase1"
+		},
+		{
+			"predicate": {
+				"charge": 2
+			},
+			"model": "crypticfoes:item/monstrous_horn_phase2"
+		},
+		{
+			"predicate": {
+				"charge": 3
+			},
+			"model": "crypticfoes:item/monstrous_horn_phase3"
+		}
+	]
 }

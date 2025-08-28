@@ -25,7 +25,8 @@ public class HowlerScreamRenderer extends EntityRenderer<EntityHowlerScream>
 	public void render(EntityHowlerScream p_114485_, float p_114486_, float p_114487_, PoseStack p_114488_, MultiBufferSource p_114489_, int p_114490_) 
 	{
 		p_114488_.pushPose();
-		float scale = 0.25F + (p_114485_.tickCount * 0.05F);
+		float scale = 0.25F + (p_114485_.tickCount * 0.08F);
+		scale = Mth.clamp(scale, 0.0F, 3.0F);
 		float xRot = Mth.lerp(p_114487_, p_114485_.xRotO, p_114485_.getXRot());
 		float yRot = Mth.rotLerp(p_114487_, p_114485_.yRotO, p_114485_.getYRot());
 		if(p_114485_.getOwner() instanceof Player)

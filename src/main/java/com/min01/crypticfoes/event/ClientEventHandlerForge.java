@@ -8,6 +8,8 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ComputeFovModifierEvent;
+import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
@@ -18,6 +20,31 @@ import net.minecraftforge.fml.common.Mod;
 public class ClientEventHandlerForge
 {
 	public static final ResourceLocation GUI_ICONS_LOCATION = new ResourceLocation(CrypticFoes.MODID, "textures/gui/cryptic_foes_icon.png");
+	
+	@SubscribeEvent
+	public static void onComputeFovModifier(ComputeFovModifierEvent event)
+	{
+		if(CrypticClientUtil.MC.player.hasEffect(CrypticEffects.STUNNED.get()))
+		{
+			float fov = event.getFovModifier();
+			event.setNewFovModifier(fov - 0.5F);
+		}
+	}
+	
+	@SubscribeEvent
+    public static void onMouseButtonInput(InputEvent.MouseButton.Pre event)
+    {
+		if(CrypticClientUtil.MC.player != null && CrypticClientUtil.MC.screen == null)
+		{
+			if(event.getButton() == CrypticClientUtil.MC.options.keyAttack.getKey().getValue() || event.getButton() == CrypticClientUtil.MC.options.keyUse.getKey().getValue())
+			{
+				if(CrypticClientUtil.MC.player.hasEffect(CrypticEffects.STUNNED.get()))
+				{
+					event.setCanceled(true);
+				}
+			}
+		}
+    }
 	
 	@SubscribeEvent
     public static void onRenderGuiOverlayEvent(RenderGuiOverlayEvent.Post event)

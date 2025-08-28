@@ -3,6 +3,7 @@ package com.min01.crypticfoes.entity.renderer;
 import com.min01.crypticfoes.CrypticFoes;
 import com.min01.crypticfoes.entity.living.EntityHowler;
 import com.min01.crypticfoes.entity.model.ModelHowler;
+import com.min01.crypticfoes.entity.renderer.layer.HowlerLayer;
 import com.min01.crypticfoes.network.CrypticNetwork;
 import com.min01.crypticfoes.network.UpdatePosArrayPacket;
 import com.min01.crypticfoes.util.CrypticClientUtil;
@@ -19,6 +20,7 @@ public class HowlerRenderer extends MobRenderer<EntityHowler, ModelHowler>
 	public HowlerRenderer(Context p_174304_)
 	{
 		super(p_174304_, new ModelHowler(p_174304_.bakeLayer(ModelHowler.LAYER_LOCATION)), 0.5F);
+		this.addLayer(new HowlerLayer(this));
 	}
 	
 	@Override

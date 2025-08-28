@@ -4,6 +4,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.goal.WrappedGoal;
 
 public class StunnedEffect extends MobEffect
 {
@@ -19,6 +20,10 @@ public class StunnedEffect extends MobEffect
 		{
 			mob.getNavigation().stop();
 			mob.setTarget(null);
+			for(WrappedGoal goal : mob.goalSelector.getAvailableGoals())
+			{
+				goal.stop();
+			}
 		}
 		p_19467_.xxa = 0.0F;
 		p_19467_.yya = 0.0F;
