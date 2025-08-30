@@ -30,7 +30,7 @@ public class HowlerRoarGoal extends BasicAnimationSkillGoal<EntityHowler>
 		super.tick();
 		if(this.mob.getAnimationTick() <= this.getSkillUsingTime() - this.getSkillWarmupTime() && this.mob.getAnimationTick() >= this.getSkillUsingTime() - 70) 
     	{
-			if(this.mob.posArray[0] != null && this.mob.getTarget() != null)
+			if(this.mob.posArray[0] != null)
 			{
 				EntityHowlerScream scream = new EntityHowlerScream(CrypticEntities.HOWLER_SCREAM.get(), this.mob.level);
 				scream.setOwner(this.mob);

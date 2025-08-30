@@ -181,7 +181,7 @@ public class EntityHowler extends AbstractAnimatableMonster
         		}
         		if(this.targetTick >= 200 && !this.level.canSeeSky(this.blockPosition()) && this.getAnimationState() == 0)
         		{
-        			BlockPos ceilingPos = CrypticUtil.getCeilingPos(this.level, this.getX(), this.getY(), this.getZ(), -4);
+        			BlockPos ceilingPos = CrypticUtil.getCeilingPos(this.level, this.getX(), this.getY(), this.getZ(), -1);
         			if(!this.level.canSeeSky(ceilingPos))
         			{
             			this.setSleepPos(ceilingPos);
@@ -223,7 +223,8 @@ public class EntityHowler extends AbstractAnimatableMonster
             		
             		if(this.getAnimationState() == 6)
             		{
-            			if(pos.distToCenterSqr(this.position()) <= 1.5F)
+            			Vec3 sleepPos = Vec3.atBottomCenterOf(pos);
+            			if(sleepPos.subtract(this.getEyePosition()).length() <= 1.5F)
             			{
             				this.setAnimationState(8);
             				this.setAnimationTick(35);
@@ -280,6 +281,15 @@ public class EntityHowler extends AbstractAnimatableMonster
     	double xDist = (double)pos.getX() + 0.5D - x;
     	double zDist = (double)pos.getZ() + 0.5D - z;
     	return Math.sqrt(xDist * xDist + zDist * zDist);
+    }
+    
+    @Override
+    public void push(double p_20286_, double p_20287_, double p_20288_)
+    {
+    	if(!this.isHowlerSleeping())
+    	{
+        	super.push(p_20286_, p_20287_, p_20288_);
+    	}
     }
     
     @Override
