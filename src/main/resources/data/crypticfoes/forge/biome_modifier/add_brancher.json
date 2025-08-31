@@ -3,8 +3,8 @@
 	"biomes": "minecraft:dark_forest",
 	"spawners": {
 		"type": "crypticfoes:brancher",
-		"weight": 100,
-		"minCount": 4,
+		"weight": 40,
+		"minCount": 2,
 		"maxCount": 4
 	}
 }

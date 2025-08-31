@@ -36,6 +36,7 @@ public class HowlerScreamRenderer extends EntityRenderer<EntityHowlerScream>
 		p_114488_.mulPose(Axis.YP.rotationDegrees(yRot));
 		p_114488_.mulPose(Axis.XP.rotationDegrees(xRot));
 		p_114488_.scale(scale, scale, scale);
+		p_114488_.translate(0, 0.5F, 0);
 		CrypticClientUtil.drawQuad(p_114488_, p_114489_.getBuffer(RenderType.entityTranslucent(this.getTextureLocation(p_114485_))), 1.0F, p_114490_, p_114485_.alpha);
 		p_114488_.popPose();
 	}

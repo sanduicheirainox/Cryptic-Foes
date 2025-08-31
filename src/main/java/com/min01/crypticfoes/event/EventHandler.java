@@ -8,6 +8,7 @@ import com.min01.crypticfoes.entity.living.EntityHowler;
 import com.min01.crypticfoes.entity.living.EntityPetrified;
 import com.min01.crypticfoes.item.CrypticItems;
 
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -45,6 +46,8 @@ public class EventHandler
     @SubscribeEvent
     public static void onSpawnPlacementRegister(SpawnPlacementRegisterEvent event)
     {
-    	event.register(CrypticEntities.BRANCHER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, EntityBrancher::checkBrancherSpawnRules, Operation.AND);
+    	event.register(CrypticEntities.PETRIFIED.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, EntityPetrified::checkPetrifiedSpawnRules, Operation.AND);
+    	event.register(CrypticEntities.BRANCHER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules, Operation.AND);
+    	event.register(CrypticEntities.HOWLER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, EntityHowler::checkMonsterSpawnRules, Operation.AND);
     }
 }

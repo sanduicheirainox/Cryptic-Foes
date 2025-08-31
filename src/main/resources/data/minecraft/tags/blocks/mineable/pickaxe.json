@@ -1,0 +1,12 @@
+{
+	"replace": false,
+	"values": [
+		"crypticfoes:block_of_fragile_bones",
+		"crypticfoes:pile_of_fragile_bones_slab",
+		"crypticfoes:pile_of_fragile_bones",
+		"crypticfoes:polished_pile_of_fragile_bones_slab",
+		"crypticfoes:polished_pile_of_fragile_bones",
+		"crypticfoes:waxed_pile_of_fragile_bones",
+		"crypticfoes:waxed_polished_pile_of_fragile_bones"
+	]
+}
