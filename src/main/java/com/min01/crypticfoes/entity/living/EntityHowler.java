@@ -286,7 +286,8 @@ public class EntityHowler extends AbstractAnimatableMonster
     
     public static boolean checkHowlerSpawnRules(EntityType<? extends Monster> p_219014_, ServerLevelAccessor p_219015_, MobSpawnType p_219016_, BlockPos p_219017_, RandomSource p_219018_)
     {
-    	return !p_219015_.canSeeSky(p_219017_) && p_219015_.getDifficulty() != Difficulty.PEACEFUL && isDarkEnoughToSpawn(p_219015_, p_219017_, p_219018_) && checkMobSpawnRules(p_219014_, p_219015_, p_219016_, p_219017_, p_219018_);
+    	BlockPos ceilingPos = CrypticUtil.getCeilingPos(p_219015_, p_219017_.getX(), p_219017_.getY(), p_219017_.getZ(), 0);
+    	return !p_219015_.canSeeSky(ceilingPos) && p_219015_.getDifficulty() != Difficulty.PEACEFUL && isDarkEnoughToSpawn(p_219015_, p_219017_, p_219018_) && checkMobSpawnRules(p_219014_, p_219015_, p_219016_, p_219017_, p_219018_);
     }
     
     public double horizontalDist(BlockPos pos, double x, double z) 
