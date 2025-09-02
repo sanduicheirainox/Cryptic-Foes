@@ -7,13 +7,23 @@ import java.util.WeakHashMap;
 import com.min01.crypticfoes.CrypticFoes;
 import com.min01.crypticfoes.block.FallenLeavesBlock;
 import com.min01.crypticfoes.effect.CrypticEffects;
+import com.min01.crypticfoes.network.CrypticNetwork;
+import com.min01.crypticfoes.network.UpdateSilencedBlocksPacket;
+import com.min01.crypticfoes.util.CrypticUtil;
+import com.min01.crypticfoes.world.CrypticSavedData;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.event.PlayLevelSoundEvent;
+import net.minecraftforge.event.TickEvent.LevelTickEvent;
+import net.minecraftforge.event.TickEvent.Phase;
+import net.minecraftforge.event.TickEvent.Type;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -22,6 +32,37 @@ public class EventHandlerForge
 {
 	public static final Map<UUID, BlockPos> LEAVES_POS = new WeakHashMap<>();
 
+	@SubscribeEvent
+	public static void onPlayLevelSoundAtPosition(PlayLevelSoundEvent.AtPosition event)
+	{
+		Level level = event.getLevel();
+		BlockPos blockPos = BlockPos.containing(event.getPosition());
+		if(CrypticUtil.isBlockSilenced(level, blockPos))
+		{
+			event.setCanceled(true);
+		}
+	}
+	
+	@SubscribeEvent
+	public static void onLevelTick(LevelTickEvent event)
+	{
+		if(event.phase == Phase.END && event.type == Type.LEVEL)
+		{
+			CrypticUtil.removeSilencedBlocks(event.level);
+		}
+	}
+	
+	@SubscribeEvent
+	public static void onLevelLoad(LevelEvent.Load event)
+	{
+		Level level = (Level) event.getLevel();
+		CrypticSavedData data = CrypticSavedData.get(level);
+		if(data != null)
+		{
+			CrypticNetwork.sendToAll(new UpdateSilencedBlocksPacket(data.getSilencedBlocks()));
+		}
+	}
+	
 	@SubscribeEvent
 	public static void onLivingTick(LivingTickEvent event)
 	{

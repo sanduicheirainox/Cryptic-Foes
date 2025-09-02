@@ -2,7 +2,7 @@ package com.min01.crypticfoes.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 
-import com.min01.crypticfoes.world.CrypticSavedData;
+import com.min01.crypticfoes.util.CrypticUtil;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
@@ -44,11 +44,7 @@ public interface MixinVibrationSystem extends VibrationSystem.User
 				{
 					return false;
 				}
-				CrypticSavedData data = CrypticSavedData.get(entity.level);
-				if(data != null)
-				{
-					return !data.isBlockSilenced(entity.level, entity.getOnPos());
-				}
+				return CrypticUtil.isBlockSilenced(entity.level, entity.getOnPos());
 			}
 			if(p_283373_.affectedState() != null)
 			{

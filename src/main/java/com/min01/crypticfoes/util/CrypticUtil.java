@@ -1,8 +1,14 @@
 package com.min01.crypticfoes.util;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.function.Consumer;
+
+import com.min01.crypticfoes.network.AddSilencingParticlePacket;
+import com.min01.crypticfoes.network.CrypticNetwork;
+import com.min01.crypticfoes.world.CrypticSavedData;
 
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
@@ -21,6 +27,45 @@ import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 public class CrypticUtil 
 {
 	public static final Method GET_ENTITY = ObfuscationReflectionHelper.findMethod(Level.class, "m_142646_");
+	
+	public static final List<BlockPos> SILENCED_BLOCKS = new ArrayList<>();
+	
+	public static void setBlockSilence(Level level, BlockPos pos)
+	{
+		CrypticSavedData data = CrypticSavedData.get(level);
+		if(data != null)
+		{
+			data.setBlockSilence(pos);
+			CrypticNetwork.sendToAll(new AddSilencingParticlePacket(pos));
+		}
+		else
+		{
+			SILENCED_BLOCKS.add(pos);
+		}
+	}
+	
+	public static void removeSilencedBlocks(Level level)
+	{
+		CrypticSavedData data = CrypticSavedData.get(level);
+		if(data != null)
+		{
+			data.getSilencedBlocks().removeIf(t -> level.getBlockState(t).isAir());
+		}
+		else
+		{
+			SILENCED_BLOCKS.removeIf(t -> level.getBlockState(t).isAir());
+		}
+	}
+	
+	public static boolean isBlockSilenced(Level level, BlockPos pos)
+	{
+		CrypticSavedData data = CrypticSavedData.get(level);
+		if(data != null)
+		{
+			return data.isBlockSilenced(level, pos);
+		}
+		return SILENCED_BLOCKS.contains(pos);
+	}
 	
 	@SuppressWarnings("deprecation")
 	public static BlockPos getCeilingPos(BlockGetter pLevel, double pX, double startY, double pZ, int aboveY)

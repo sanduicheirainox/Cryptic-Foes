@@ -1,6 +1,10 @@
 package com.min01.crypticfoes.event;
 
+import com.google.common.base.Suppliers;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.ImmutableBiMap;
 import com.min01.crypticfoes.CrypticFoes;
+import com.min01.crypticfoes.block.CrypticBlocks;
 import com.min01.crypticfoes.effect.CrypticEffects;
 import com.min01.crypticfoes.entity.CrypticEntities;
 import com.min01.crypticfoes.entity.living.EntityBrancher;
@@ -10,11 +14,13 @@ import com.min01.crypticfoes.item.CrypticItems;
 
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.item.HoneycombItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -33,6 +39,9 @@ public class EventHandler
 		ItemStack awkward = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD);
 		ItemStack fragility = PotionUtils.setPotion(new ItemStack(Items.POTION), CrypticEffects.FRAGILITY_POTION.get());
 		BrewingRecipeRegistry.addRecipe(Ingredient.of(awkward), Ingredient.of(CrypticItems.FRAGILE_BONE.get()), fragility);
+		
+		BiMap<Block, Block> waxables = HoneycombItem.WAXABLES.get();
+		HoneycombItem.WAXABLES = Suppliers.memoize(() -> ImmutableBiMap.<Block, Block>builder().putAll(waxables).put(CrypticBlocks.PILE_OF_FRAGILE_BONES.get(), CrypticBlocks.WAXED_PILE_OF_FRAGILE_BONES.get()).put(CrypticBlocks.POLISHED_PILE_OF_FRAGILE_BONES.get(), CrypticBlocks.WAXED_POLISHED_PILE_OF_FRAGILE_BONES.get()).build());
 	}
 	
     @SubscribeEvent

@@ -67,7 +67,11 @@ public class CrypticSavedData extends SavedData
 	
 	public boolean isBlockSilenced(Level level, BlockPos pos)
 	{
-		this.blocks.removeIf(t -> level.getBlockState(pos).isAir());
 		return this.blocks.contains(pos);
+	}
+	
+	public List<BlockPos> getSilencedBlocks()
+	{
+		return this.blocks;
 	}
 }

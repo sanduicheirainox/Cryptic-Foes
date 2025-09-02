@@ -1,8 +1,6 @@
 package com.min01.crypticfoes.item;
 
-import com.min01.crypticfoes.network.AddSilencingParticlePacket;
-import com.min01.crypticfoes.network.CrypticNetwork;
-import com.min01.crypticfoes.world.CrypticSavedData;
+import com.min01.crypticfoes.util.CrypticUtil;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
@@ -23,22 +21,17 @@ public class SilencingBlendItem extends Item
 	public InteractionResult useOn(UseOnContext p_41427_)
 	{
 		Level level = p_41427_.getLevel();
-		if(!level.isClientSide)
+		Player player = p_41427_.getPlayer();
+		ItemStack stack = p_41427_.getItemInHand();
+		BlockPos pos = p_41427_.getClickedPos();
+		if(!CrypticUtil.isBlockSilenced(level, pos))
 		{
-			Player player = p_41427_.getPlayer();
-			ItemStack stack = p_41427_.getItemInHand();
-			BlockPos pos = p_41427_.getClickedPos();
-			CrypticSavedData data = CrypticSavedData.get(level);
-			if(data != null && !data.isBlockSilenced(level, pos))
+			if(!player.getAbilities().instabuild)
 			{
-				if(!player.getAbilities().instabuild)
-				{
-					stack.shrink(1);
-				}
-				data.setBlockSilence(pos);
-				CrypticNetwork.sendToAll(new AddSilencingParticlePacket(pos));
-				return InteractionResult.SUCCESS;
+				stack.shrink(1);
 			}
+			CrypticUtil.setBlockSilence(level, pos);
+			return InteractionResult.SUCCESS;
 		}
 		return super.useOn(p_41427_);
 	}
