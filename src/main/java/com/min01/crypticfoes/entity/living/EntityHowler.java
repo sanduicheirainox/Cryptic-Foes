@@ -6,15 +6,19 @@ import com.min01.crypticfoes.entity.AbstractAnimatableMonster;
 import com.min01.crypticfoes.entity.ai.goal.HowlerPunchGoal;
 import com.min01.crypticfoes.entity.ai.goal.HowlerRoarGoal;
 import com.min01.crypticfoes.misc.SmoothAnimationState;
+import com.min01.crypticfoes.particle.CrypticParticles;
 import com.min01.crypticfoes.sound.CrypticSounds;
 import com.min01.crypticfoes.util.CrypticUtil;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.RandomSource;
@@ -23,6 +27,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -171,10 +176,10 @@ public class EntityHowler extends AbstractAnimatableMonster
     					this.getNavigation().moveTo(this.getTarget(), 1.0F);
         			}
         		}
-        		if(this.targetTick >= 200 && !this.level.canSeeSky(this.blockPosition()) && this.getAnimationState() == 0)
+        		if(this.targetTick >= 200 && !this.level.canSeeSky(this.blockPosition()) && this.getAnimationState() == 0 && this.onGround())
         		{
         			BlockPos ceilingPos = CrypticUtil.getCeilingPos(this.level, this.getX(), this.getY(), this.getZ(), -1);
-        			if(!this.level.canSeeSky(ceilingPos))
+        			if(!this.level.canSeeSky(ceilingPos) && CrypticUtil.distanceToY(this, ceilingPos) >= 8.0F)
         			{
             			this.setSleepPos(ceilingPos);
             			this.setCanMove(false);
@@ -190,6 +195,7 @@ public class EntityHowler extends AbstractAnimatableMonster
             		this.setFalling(false);
             		this.setAnimationState(3);
             		this.setAnimationTick(43);
+            		this.createShockwave();
         		}
         		else if(this.getAnimationState() == 3 && this.getAnimationTick() <= 0)
         		{
@@ -273,11 +279,30 @@ public class EntityHowler extends AbstractAnimatableMonster
     	}
     }
     
+    public void createShockwave()
+    {
+    	List<LivingEntity> list = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(3.0F), t -> !(t instanceof EntityHowler));
+    	list.forEach(t -> 
+    	{
+    		Vec3 motion = CrypticUtil.fromToVector(this.position(), t.position().add(0, 1, 0), 1.0F);
+    		t.push(motion.x, motion.y, motion.z);
+    		if(t instanceof ServerPlayer player)
+    		{
+    			player.connection.send(new ClientboundSetEntityMotionPacket(t));
+    		}
+    	});
+    	if(!this.level.isClientSide)
+    	{
+    		ServerLevel level = (ServerLevel) this.level;
+    		level.sendParticles(CrypticParticles.HOWLER_SHOCKWAVE.get(), this.getX(), this.getY(0.01F), this.getZ(), 1, 0.0F, 0.0F, 0.0F, 0.0F);
+    	}
+    }
+    
     public static boolean checkHowlerSpawnRules(EntityType<? extends Monster> p_219014_, ServerLevelAccessor p_219015_, MobSpawnType p_219016_, BlockPos p_219017_, RandomSource p_219018_)
     {
     	BlockPos ceilingPos = CrypticUtil.getCeilingPos(p_219015_, p_219017_.getX(), p_219017_.getY(), p_219017_.getZ(), 0);
     	BlockPos groundPos = p_219015_.getHeightmapPos(Types.WORLD_SURFACE_WG, p_219017_);
-    	return ceilingPos.getY() < groundPos.getY() && !p_219015_.canSeeSky(ceilingPos) && p_219015_.getDifficulty() != Difficulty.PEACEFUL && isDarkEnoughToSpawn(p_219015_, p_219017_, p_219018_) && checkMobSpawnRules(p_219014_, p_219015_, p_219016_, p_219017_, p_219018_);
+    	return CrypticUtil.distanceToY(p_219017_, ceilingPos) >= 8.0F && ceilingPos.getY() < groundPos.getY() && !p_219015_.canSeeSky(ceilingPos) && p_219015_.getDifficulty() != Difficulty.PEACEFUL && isDarkEnoughToSpawn(p_219015_, p_219017_, p_219018_) && checkMobSpawnRules(p_219014_, p_219015_, p_219016_, p_219017_, p_219018_);
     }
     
     public double horizontalDist(BlockPos pos, double x, double z) 

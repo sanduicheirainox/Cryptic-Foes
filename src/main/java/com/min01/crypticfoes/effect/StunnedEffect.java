@@ -35,10 +35,6 @@ public class StunnedEffect extends MobEffect
 		p_19467_.xxa = 0.0F;
 		p_19467_.yya = 0.0F;
 		p_19467_.zza = 0.0F;
-		p_19467_.setXRot(p_19467_.xRotO);
-		p_19467_.setYRot(p_19467_.yRotO);
-		p_19467_.setYHeadRot(p_19467_.yHeadRotO);
-		p_19467_.setYBodyRot(p_19467_.yBodyRotO);
 	}
 	
 	@Override

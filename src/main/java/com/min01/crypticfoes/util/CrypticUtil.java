@@ -31,6 +31,18 @@ public class CrypticUtil
 	
 	public static final List<BlockPos> SILENCED_BLOCKS = new ArrayList<>();
 	
+    public static float distanceToY(BlockPos blockPos, BlockPos targetPos)
+    {
+        float f = (float)(blockPos.getY() - targetPos.getY());
+        return Mth.sqrt(f * f);
+    }
+    
+    public static float distanceToY(Entity entity, BlockPos pos)
+    {
+        float f = (float)(entity.getY() - pos.getY());
+        return Mth.sqrt(f * f);
+    }
+    
 	public static void setBlockSilence(Level level, BlockPos pos)
 	{
 		CrypticSavedData data = CrypticSavedData.get(level);

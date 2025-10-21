@@ -15,4 +15,5 @@ public class CrypticParticles
 	public static final RegistryObject<SimpleParticleType> BRANCHER_EXPLOSION = PARTICLES.register("brancher_explosion", () -> new SimpleParticleType(false));
 	public static final RegistryObject<SimpleParticleType> BRANCHER_EXPLOSION_SEED = PARTICLES.register("brancher_explosion_seed", () -> new SimpleParticleType(false));
 	public static final RegistryObject<SimpleParticleType> SILENCING = PARTICLES.register("silencing", () -> new SimpleParticleType(false));
+	public static final RegistryObject<SimpleParticleType> HOWLER_SHOCKWAVE = PARTICLES.register("howler_shockwave", () -> new SimpleParticleType(false));
 }

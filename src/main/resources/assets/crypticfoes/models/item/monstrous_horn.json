@@ -6,6 +6,12 @@
 	"overrides": [
 		{
 			"predicate": {
+				"charge": 0
+			},
+			"model": "crypticfoes:item/monstrous_horn_phase1"
+		},
+		{
+			"predicate": {
 				"charge": 1
 			},
 			"model": "crypticfoes:item/monstrous_horn_phase1"
@@ -21,6 +27,24 @@
 				"charge": 3
 			},
 			"model": "crypticfoes:item/monstrous_horn_phase3"
+		},
+		{
+			"predicate": {
+				"tooting": 1
+			},
+			"model": "crypticfoes:item/monstrous_horn_tooting1"
+		},
+		{
+			"predicate": {
+				"tooting": 1
+			},
+			"model": "crypticfoes:item/monstrous_horn_tooting2"
+		},
+		{
+			"predicate": {
+				"tooting": 1
+			},
+			"model": "crypticfoes:item/monstrous_horn_tooting3"
 		}
 	]
 }
