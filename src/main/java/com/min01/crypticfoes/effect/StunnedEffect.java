@@ -5,7 +5,8 @@ import com.min01.crypticfoes.misc.CrypticTags;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
 
 public class StunnedEffect extends MobEffect
@@ -22,15 +23,18 @@ public class StunnedEffect extends MobEffect
 		{
 			return;
 		}
-		if(p_19467_ instanceof PathfinderMob mob)
-		{
+        if(p_19467_ instanceof Mob mob && !mob.level.isClientSide)
+        {
 			mob.getNavigation().stop();
 			mob.setTarget(null);
 			for(WrappedGoal goal : mob.goalSelector.getAvailableGoals())
 			{
 				goal.stop();
 			}
-		}
+            mob.goalSelector.setControlFlag(Goal.Flag.MOVE, false);
+            mob.goalSelector.setControlFlag(Goal.Flag.JUMP, false);
+            mob.goalSelector.setControlFlag(Goal.Flag.LOOK, false);
+        }
 		p_19467_.stopUsingItem();
 		p_19467_.xxa = 0.0F;
 		p_19467_.yya = 0.0F;

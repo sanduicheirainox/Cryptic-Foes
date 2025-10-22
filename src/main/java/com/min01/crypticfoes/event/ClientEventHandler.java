@@ -37,11 +37,11 @@ public class ClientEventHandler
 	{
         ItemProperties.register(CrypticItems.MONSTROUS_HORN.get(), new ResourceLocation("charge"), (p_174585_, p_174586_, p_174587_, p_174588_) ->
         {
+        	if(p_174587_ != null && p_174587_.isUsingItem())
+        	{
+        		return Mth.floor(MonstrousHornItem.getHornCharge(p_174585_) / 2) + 0.5F;
+        	}
         	return Mth.floor(MonstrousHornItem.getHornCharge(p_174585_) / 2);
-        });
-        ItemProperties.register(CrypticItems.MONSTROUS_HORN.get(), new ResourceLocation("tooting"), (p_234978_, p_234979_, p_234980_, p_234981_) -> 
-        {
-            return p_234980_ != null && p_234980_.isUsingItem() && p_234980_.getUseItem() == p_234978_ ? 1.0F : 0.0F;
         });
 	}
 	

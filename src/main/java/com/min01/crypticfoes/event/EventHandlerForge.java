@@ -20,7 +20,10 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.PlayLevelSoundEvent;
 import net.minecraftforge.event.TickEvent.LevelTickEvent;
@@ -120,21 +123,24 @@ public class EventHandlerForge
 		Level level = (Level) event.getLevel();
 		BlockPos pos = event.getPos();
 		Player player = event.getPlayer();
-		ItemStack stack = event.getHeldItemStack();
+		UseOnContext ctx = event.getContext();
+		ItemStack stack = ctx.getItemInHand();
 		if(player != null && CrypticUtil.isBlockSilenced(level, pos) && event.getToolAction() == ToolActions.AXE_WAX_OFF)
 		{
 			CrypticUtil.removeSilencedBlock(level, pos);
-			level.playSound(player, pos, SoundEvents.AXE_WAX_OFF, SoundSource.BLOCKS, 1.0F, 1.0F);
-			level.levelEvent(player, 3004, pos, 0);
+			BlockState state = level.getBlockState(pos);
 			if(player instanceof ServerPlayer)
 			{
 				CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger((ServerPlayer)player, pos, stack);
 			}
-			stack.hurtAndBreak(1, player, (p_150686_) -> 
-			{	 
-				p_150686_.broadcastBreakEvent(player.getUsedItemHand());
+			level.playSound(player, pos, SoundEvents.AXE_WAX_OFF, SoundSource.BLOCKS, 1.0F, 1.0F);
+			level.levelEvent(player, 3004, pos, 0);
+			level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, state));
+			stack.hurtAndBreak(1, player, (p_150686_) ->
+			{
+				p_150686_.broadcastBreakEvent(ctx.getHand());
 			});
-			player.swing(player.getUsedItemHand());
+			player.swing(ctx.getHand());
 		}
 	}
 	

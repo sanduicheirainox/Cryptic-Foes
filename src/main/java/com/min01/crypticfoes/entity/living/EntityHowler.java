@@ -176,7 +176,7 @@ public class EntityHowler extends AbstractAnimatableMonster
     					this.getNavigation().moveTo(this.getTarget(), 1.0F);
         			}
         		}
-        		if(this.targetTick >= 200 && !this.level.canSeeSky(this.blockPosition()) && this.getAnimationState() == 0 && this.onGround())
+        		if(this.targetTick >= 200 && !this.level.canSeeSky(this.blockPosition()) && this.getAnimationState() == 0 && this.onGround() && this.level.getBlockState(this.getOnPos().above()).isAir())
         		{
         			BlockPos ceilingPos = CrypticUtil.getCeilingPos(this.level, this.getX(), this.getY(), this.getZ(), -1);
         			if(!this.level.canSeeSky(ceilingPos) && CrypticUtil.distanceToY(this, ceilingPos) >= 8.0F)
