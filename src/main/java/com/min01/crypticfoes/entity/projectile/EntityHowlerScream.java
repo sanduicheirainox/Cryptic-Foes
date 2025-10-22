@@ -104,6 +104,12 @@ public class EntityHowlerScream extends ThrowableProjectile
 	}
 	
 	@Override
+	public boolean isInWater() 
+	{
+		return false;
+	}
+	
+	@Override
 	public void addAdditionalSaveData(CompoundTag p_37265_) 
 	{
 		if(this.entityData.get(OWNER_UUID).isPresent())

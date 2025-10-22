@@ -230,6 +230,12 @@ public class EntityHowler extends AbstractAnimatableMonster
             			}
             			else
             			{
+                			BlockPos abovePos = this.blockPosition().above(3);
+                			BlockPos ceilingPos = CrypticUtil.getCeilingPos(this.level, this.getX(), this.getY(), this.getZ(), -1);
+                			if(this.level.getBlockState(abovePos).isCollisionShapeFullBlock(this.level, abovePos))
+                			{
+                				this.setSleepPos(ceilingPos);
+                			}
                 			this.addDeltaMovement(new Vec3(0.0F, 0.05F, 0.0F));
             			}
             		}
@@ -271,11 +277,22 @@ public class EntityHowler extends AbstractAnimatableMonster
     	{
     		this.setDeltaMovement(Vec3.ZERO);
     	}
-    	if(this.isHowlerSleeping() && this.getAnimationState() == 1 && this.getTarget() != null)
+    	if(this.isHowlerSleeping() && this.getAnimationState() == 1)
     	{
-			this.targetTick = 0;
-			this.setAnimationState(2);
-			this.setAnimationTick(60);
+    		if(this.getTarget() != null)
+    		{
+    			this.targetTick = 0;
+    			this.setAnimationState(2);
+    			this.setAnimationTick(60);
+    		}
+    		else if(this.level.getBlockState(this.getSleepPos()).isAir())
+    		{
+    			this.targetTick = 0;
+        		this.setHowlerSleeping(false);
+    			this.setNoGravity(false);
+    			this.setFalling(true);
+    			this.setAnimationState(0);
+    		}
     	}
     }
     

@@ -24,6 +24,12 @@
 		},
 		{
 			"predicate": {
+				"charge":  0.5
+			},
+			"model": "crypticfoes:item/monstrous_horn_tooting1"
+		},
+		{
+			"predicate": {
 				"charge":  1.5
 			},
 			"model": "crypticfoes:item/monstrous_horn_tooting1"

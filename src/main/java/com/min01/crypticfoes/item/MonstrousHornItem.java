@@ -59,7 +59,7 @@ public class MonstrousHornItem extends Item
 				if(chargeTick < charge * 3)
 				{
 					setScreamTick(p_41404_, tick + 1);
-					if(tick % 5 == 0)
+					if(tick % 2 == 0)
 					{
 						EntityHowlerScream scream = new EntityHowlerScream(CrypticEntities.HOWLER_SCREAM.get(), p_41405_);
 						scream.setOwner(p_41406_);
@@ -67,7 +67,7 @@ public class MonstrousHornItem extends Item
 						scream.shootFromRotation(p_41406_, p_41406_.getXRot(), p_41406_.getYRot(), 0.0F, 0.5F + (charge * 0.25F), 1.0F);
 						scream.setNoGravity(true);
 						scream.setStunDuration(charge * 20);
-						scream.setRange(0.03F - (charge * 0.0035F));
+						scream.setRange(0.06F - (charge * 0.0005F));
 						p_41405_.addFreshEntity(scream);
 						setHornChargeTick(p_41404_, chargeTick + 1);
 					}

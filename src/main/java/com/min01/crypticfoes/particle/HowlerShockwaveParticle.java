@@ -50,7 +50,7 @@ public class HowlerShockwaveParticle extends TextureSheetParticle
 			this.quadSize += 0.15F;
 			if(this.alpha > 0.0F)
 			{
-				this.alpha -= 0.025F;
+				this.alpha -= 0.05F;
 			}
 		}
 	}
