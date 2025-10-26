@@ -30,6 +30,7 @@ public class CrypticFoes
 		CrypticEffects.EFFECTS.register(bus);
 		CrypticEffects.POTIONS.register(bus);
 		CrypticBlocks.BLOCKS.register(bus);
+		CrypticBlocks.BLOCK_ENTITIES.register(bus);
 		CrypticCreativeTabs.CREATIVE_MODE_TAB.register(bus);
 		CrypticParticles.PARTICLES.register(bus);
 		CrypticSounds.SOUNDS.register(bus);

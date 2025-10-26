@@ -5,12 +5,14 @@ import java.util.List;
 import com.min01.crypticfoes.entity.AbstractAnimatableMonster;
 import com.min01.crypticfoes.entity.ai.goal.HowlerPunchGoal;
 import com.min01.crypticfoes.entity.ai.goal.HowlerRoarGoal;
+import com.min01.crypticfoes.item.CrypticItems;
 import com.min01.crypticfoes.misc.SmoothAnimationState;
 import com.min01.crypticfoes.particle.CrypticParticles;
 import com.min01.crypticfoes.sound.CrypticSounds;
 import com.min01.crypticfoes.util.CrypticUtil;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
@@ -25,6 +27,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -33,6 +36,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -212,17 +216,16 @@ public class EntityHowler extends AbstractAnimatableMonster
         		BlockPos pos = this.getSleepPos();
         		if(this.horizontalDist(pos, this.getX(), this.getZ()) <= 2.0F)
         		{
-        			if(this.getAnimationState() == 0)
+        			if(this.getAnimationState() == 0 && !this.isInWater())
         			{
             			this.setAnimationState(7);
             			this.setAnimationTick(46);
                 		this.setNoGravity(true);
-                		this.setDeltaMovement(Vec3.ZERO);
         			}
             		
             		if(this.getAnimationState() == 6)
             		{
-            			Vec3 sleepPos = Vec3.atBottomCenterOf(pos);
+            			Vec3 sleepPos = Vec3.atCenterOf(pos);
             			if(sleepPos.subtract(this.getEyePosition()).length() <= 2.0F)
             			{
             				this.setAnimationState(8);
@@ -231,13 +234,16 @@ public class EntityHowler extends AbstractAnimatableMonster
             			else
             			{
                 			BlockPos abovePos = this.blockPosition().above(3);
-                			BlockPos ceilingPos = CrypticUtil.getCeilingPos(this.level, this.getX(), this.getY(), this.getZ(), -1);
-                			if(this.level.getBlockState(abovePos).isCollisionShapeFullBlock(this.level, abovePos))
+                			if(this.verticalCollision)
                 			{
-                				this.setSleepPos(ceilingPos);
+                				this.setSleepPos(abovePos);
                 			}
                 			this.addDeltaMovement(new Vec3(0.0F, 0.05F, 0.0F));
             			}
+            		}
+            		else
+            		{
+                		this.setDeltaMovement(Vec3.ZERO);
             		}
             		
             		if(this.getAnimationTick() <= 0)
@@ -296,6 +302,21 @@ public class EntityHowler extends AbstractAnimatableMonster
     	}
     }
     
+    @Override
+    protected void dropCustomDeathLoot(DamageSource p_32292_, int p_32293_, boolean p_32294_) 
+    {
+    	super.dropCustomDeathLoot(p_32292_, p_32293_, p_32294_);
+        Entity entity = p_32292_.getEntity();
+        if(entity != this && entity instanceof Creeper creeper) 
+        {
+        	if(creeper.canDropMobsSkull()) 
+        	{
+        		creeper.increaseDroppedSkulls();
+        		this.spawnAtLocation(CrypticItems.HOWLER_HEAD.get());
+        	}
+        }
+    }
+    
     public void createShockwave()
     {
     	List<LivingEntity> list = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(3.0F), t -> !(t instanceof EntityHowler));
@@ -312,6 +333,12 @@ public class EntityHowler extends AbstractAnimatableMonster
     	{
     		ServerLevel level = (ServerLevel) this.level;
     		level.sendParticles(CrypticParticles.HOWLER_SHOCKWAVE.get(), this.getX(), this.getY(0.01F), this.getZ(), 1, 0.0F, 0.0F, 0.0F, 0.0F);
+    		for(int i = 0; i < 50; i++)
+    		{
+                double spread1 = this.random.nextGaussian() * 1.0F;
+                double spread2 = this.random.nextGaussian() * 1.0F;
+                level.sendParticles(new BlockParticleOption(CrypticParticles.DUST_PILLAR.get(), this.getBlockStateOn()), this.getX() + spread1, this.getY(), this.getZ() + spread2, 1, 0.0F, 0.0F, 0.0F, 0.0F);
+    		}
     	}
     }
     

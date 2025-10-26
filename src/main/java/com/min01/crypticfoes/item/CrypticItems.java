@@ -6,10 +6,13 @@ import com.min01.crypticfoes.CrypticFoes;
 import com.min01.crypticfoes.block.CrypticBlocks;
 import com.min01.crypticfoes.entity.CrypticEntities;
 
+import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.StandingAndWallBlockItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.DeferredRegister;
@@ -38,6 +41,8 @@ public class CrypticItems
 	public static final RegistryObject<Item> WAXED_POLISHED_PILE_OF_FRAGILE_BONES = registerBlockItem("waxed_polished_pile_of_fragile_bones", () -> CrypticBlocks.WAXED_POLISHED_PILE_OF_FRAGILE_BONES.get(), new Item.Properties());
 	public static final RegistryObject<Item> PILE_OF_FRAGILE_BONES_SLAB = registerBlockItem("pile_of_fragile_bones_slab", () -> CrypticBlocks.PILE_OF_FRAGILE_BONES_SLAB.get(), new Item.Properties());
 	public static final RegistryObject<Item> POLISHED_PILE_OF_FRAGILE_BONES_SLAB = registerBlockItem("polished_pile_of_fragile_bones_slab", () -> CrypticBlocks.POLISHED_PILE_OF_FRAGILE_BONES_SLAB.get(), new Item.Properties());
+
+	public static final RegistryObject<Item> HOWLER_HEAD = ITEMS.register("howler_head", () -> new StandingAndWallBlockItem(CrypticBlocks.HOWLER_HEAD.get(), CrypticBlocks.HOWLER_WALL_HEAD.get(), (new Item.Properties()).rarity(Rarity.UNCOMMON), Direction.DOWN));
 	
 	public static RegistryObject<Item> registerBlockItem(String name, Supplier<Block> block, Item.Properties properties)
 	{

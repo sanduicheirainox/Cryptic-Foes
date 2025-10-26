@@ -1,6 +1,8 @@
 package com.min01.crypticfoes.event;
 
 import com.min01.crypticfoes.CrypticFoes;
+import com.min01.crypticfoes.block.CrypticBlocks;
+import com.min01.crypticfoes.block.model.ModelHowlerHead;
 import com.min01.crypticfoes.entity.CrypticEntities;
 import com.min01.crypticfoes.entity.model.ModelBrancher;
 import com.min01.crypticfoes.entity.model.ModelHowler;
@@ -13,12 +15,16 @@ import com.min01.crypticfoes.entity.renderer.PetrifiedRenderer;
 import com.min01.crypticfoes.entity.renderer.PetrifiedStoneRenderer;
 import com.min01.crypticfoes.item.CrypticItems;
 import com.min01.crypticfoes.item.MonstrousHornItem;
+import com.min01.crypticfoes.misc.CrypticSkullTypes;
 import com.min01.crypticfoes.particle.BrancherExplosionParticle;
 import com.min01.crypticfoes.particle.BrancherExplosionSeedParticle;
 import com.min01.crypticfoes.particle.CrypticParticles;
+import com.min01.crypticfoes.particle.DustPillarParticle;
 import com.min01.crypticfoes.particle.HowlerShockwaveParticle;
 import com.min01.crypticfoes.particle.SilencingParticle;
 
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -35,6 +41,7 @@ public class ClientEventHandler
 	@SubscribeEvent
 	public static void onFMLClientSetup(FMLClientSetupEvent event)
 	{
+        BlockEntityRenderers.register(CrypticBlocks.CRYPTIC_SKULL_BLOCK_ENTITY.get(), SkullBlockRenderer::new);
         ItemProperties.register(CrypticItems.MONSTROUS_HORN.get(), new ResourceLocation("charge"), (p_174585_, p_174586_, p_174587_, p_174588_) ->
         {
         	if(p_174587_ != null && p_174587_.isUsingItem())
@@ -43,6 +50,7 @@ public class ClientEventHandler
         	}
         	return Mth.floor(MonstrousHornItem.getHornCharge(p_174585_) / 2);
         });
+        SkullBlockRenderer.SKIN_BY_TYPE.put(CrypticSkullTypes.HOWLER, new ResourceLocation(CrypticFoes.MODID, "textures/entity/howler.png"));
 	}
 	
 	@SubscribeEvent
@@ -55,6 +63,12 @@ public class ClientEventHandler
 		event.registerEntityRenderer(CrypticEntities.HOWLER_SCREAM.get(), HowlerScreamRenderer::new);
 	}
 	
+	@SubscribeEvent
+	public static void onCreateSkullModels(EntityRenderersEvent.CreateSkullModels event)
+	{
+		event.registerSkullModel(CrypticSkullTypes.HOWLER, new ModelHowlerHead(event.getEntityModelSet().bakeLayer(ModelHowlerHead.LAYER_LOCATION)));
+	}
+	
     @SubscribeEvent
     public static void onRegisterLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event)
     {
@@ -62,6 +76,7 @@ public class ClientEventHandler
     	event.registerLayerDefinition(ModelPetrifiedStone.LAYER_LOCATION, ModelPetrifiedStone::createBodyLayer);
     	event.registerLayerDefinition(ModelBrancher.LAYER_LOCATION, ModelBrancher::createBodyLayer);
     	event.registerLayerDefinition(ModelHowler.LAYER_LOCATION, ModelHowler::createBodyLayer);
+    	event.registerLayerDefinition(ModelHowlerHead.LAYER_LOCATION, ModelHowlerHead::createHeadModel);
     }
     
 	@SubscribeEvent
@@ -71,5 +86,6 @@ public class ClientEventHandler
 		event.registerSpecial(CrypticParticles.BRANCHER_EXPLOSION_SEED.get(), new BrancherExplosionSeedParticle.Provider());
 		event.registerSpriteSet(CrypticParticles.SILENCING.get(), SilencingParticle.Provider::new);
 		event.registerSpriteSet(CrypticParticles.HOWLER_SHOCKWAVE.get(), HowlerShockwaveParticle.Provider::new);
+		event.registerSpecial(CrypticParticles.DUST_PILLAR.get(), new DustPillarParticle.Provider());
 	}
 }

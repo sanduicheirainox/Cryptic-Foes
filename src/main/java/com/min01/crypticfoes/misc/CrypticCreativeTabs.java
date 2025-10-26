@@ -35,5 +35,6 @@ public class CrypticCreativeTabs
     			output.accept(CrypticItems.WAXED_POLISHED_PILE_OF_FRAGILE_BONES.get());
     			output.accept(CrypticItems.PILE_OF_FRAGILE_BONES_SLAB.get());
     			output.accept(CrypticItems.POLISHED_PILE_OF_FRAGILE_BONES_SLAB.get());
+    			output.accept(CrypticItems.HOWLER_HEAD.get());
     		}).build());
 }
