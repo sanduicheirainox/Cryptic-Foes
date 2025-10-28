@@ -10,6 +10,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class CrypticPaintings 
 {
     public static final DeferredRegister<PaintingVariant> PAINTING_VARIANTS = DeferredRegister.create(Registries.PAINTING_VARIANT, CrypticFoes.MODID);
-    
+
     public static final RegistryObject<PaintingVariant> MOUNTAIN_HOLDER = PAINTING_VARIANTS.register("mountain_holder", () -> new PaintingVariant(64, 48));
+    public static final RegistryObject<PaintingVariant> DWELLERS = PAINTING_VARIANTS.register("dwellers", () -> new PaintingVariant(32, 32));
 }

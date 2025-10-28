@@ -1,0 +1,28 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "redstone",
+	"key": {
+		"H": {
+			"item": "crypticfoes:howler_membrane"
+		},
+		"D": {
+			"item": "minecraft:deepslate"
+		},
+		"R": {
+			"item": "minecraft:redstone"
+		},
+		"I": {
+			"item": "minecraft:iron_block"
+		}
+	},
+	"pattern": [
+		"HDH",
+		"RIR",
+		"DDD"
+	],
+	"result": {
+		"count": 1,
+		"item": "crypticfoes:screamer"
+	},
+	"show_notification": true
+}

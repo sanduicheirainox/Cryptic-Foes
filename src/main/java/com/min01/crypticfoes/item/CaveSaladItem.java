@@ -1,0 +1,33 @@
+package com.min01.crypticfoes.item;
+
+import com.min01.crypticfoes.entity.CrypticEntities;
+import com.min01.crypticfoes.entity.projectile.EntityHowlerScream;
+import com.min01.crypticfoes.misc.CrypticFoods;
+
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.BowlFoodItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+
+public class CaveSaladItem extends BowlFoodItem
+{
+	public CaveSaladItem() 
+	{
+		super(new Item.Properties().food(CrypticFoods.CAVE_SALAD));
+	}
+	
+	@Override
+	public ItemStack finishUsingItem(ItemStack p_41409_, Level p_41410_, LivingEntity p_41411_)
+	{
+		EntityHowlerScream scream = new EntityHowlerScream(CrypticEntities.HOWLER_SCREAM.get(), p_41410_);
+		scream.setOwner(p_41411_);
+		scream.setPos(p_41411_.getEyePosition());
+		scream.shootFromRotation(p_41411_, p_41411_.getXRot(), p_41411_.getYRot(), 0.0F, 0.75F, 1.0F);
+		scream.setNoGravity(true);
+		scream.setStunDuration(20);
+		scream.setRange(0.06F - 0.0005F);
+		p_41410_.addFreshEntity(scream);
+		return super.finishUsingItem(p_41409_, p_41410_, p_41411_);
+	}
+}

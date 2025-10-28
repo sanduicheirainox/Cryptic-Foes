@@ -32,6 +32,7 @@ public class CrypticItems
 	public static final RegistryObject<Item> HOWLER_MEMBRANE = ITEMS.register("howler_membrane", () -> new Item(new Item.Properties()));
 	public static final RegistryObject<Item> MONSTROUS_HORN = ITEMS.register("monstrous_horn", () -> new MonstrousHornItem());
 	public static final RegistryObject<Item> SILENCING_BLEND = ITEMS.register("silencing_blend", () -> new SilencingBlendItem());
+	public static final RegistryObject<Item> CAVE_SALAD = ITEMS.register("cave_salad", () -> new CaveSaladItem());
 	
 	public static final RegistryObject<Item> FALLEN_LEAVES = registerBlockItem("fallen_leaves", () -> CrypticBlocks.FALLEN_LEAVES.get(), new Item.Properties());
 	public static final RegistryObject<Item> BLOCK_OF_FRAGILE_BONES = registerBlockItem("block_of_fragile_bones", () -> CrypticBlocks.BLOCK_OF_FRAGILE_BONES.get(), new Item.Properties());
@@ -43,6 +44,8 @@ public class CrypticItems
 	public static final RegistryObject<Item> POLISHED_PILE_OF_FRAGILE_BONES_SLAB = registerBlockItem("polished_pile_of_fragile_bones_slab", () -> CrypticBlocks.POLISHED_PILE_OF_FRAGILE_BONES_SLAB.get(), new Item.Properties());
 
 	public static final RegistryObject<Item> HOWLER_HEAD = ITEMS.register("howler_head", () -> new StandingAndWallBlockItem(CrypticBlocks.HOWLER_HEAD.get(), CrypticBlocks.HOWLER_WALL_HEAD.get(), (new Item.Properties()).rarity(Rarity.UNCOMMON), Direction.DOWN));
+	
+	public static final RegistryObject<Item> SCREAMER = ITEMS.register("screamer", () -> new ScreamerBlockItem(CrypticBlocks.SCREAMER.get(), new Item.Properties()));
 	
 	public static RegistryObject<Item> registerBlockItem(String name, Supplier<Block> block, Item.Properties properties)
 	{

@@ -16,25 +16,15 @@ public class CrypticCreativeTabs
 
     public static final RegistryObject<CreativeModeTab> CRYPTIC_FOES = CREATIVE_MODE_TAB.register("crypticfoes", () -> CreativeModeTab.builder()
     		.title(Component.translatable("itemGroup.crypticfoes"))
-    		.icon(() -> new ItemStack(CrypticItems.FRAGILE_BONE.get()))
+    		.icon(() -> new ItemStack(CrypticItems.HOWLER_MEMBRANE.get()))
     		.displayItems((enabledFeatures, output) -> 
     		{
-    			output.accept(CrypticItems.PETRIFIED_SPAWN_EGG.get());
-    			output.accept(CrypticItems.BRANCHER_SPAWN_EGG.get());
     			output.accept(CrypticItems.HOWLER_SPAWN_EGG.get());
-    			output.accept(CrypticItems.FRAGILE_BONE.get());
-    			output.accept(CrypticItems.UNSTABLE_RESIN.get());
     			output.accept(CrypticItems.HOWLER_MEMBRANE.get());
-    			output.accept(CrypticItems.MONSTROUS_HORN.get());
     			output.accept(CrypticItems.SILENCING_BLEND.get());
-    			output.accept(CrypticItems.FALLEN_LEAVES.get());
-    			output.accept(CrypticItems.BLOCK_OF_FRAGILE_BONES.get());
-    			output.accept(CrypticItems.PILE_OF_FRAGILE_BONES.get());
-    			output.accept(CrypticItems.POLISHED_PILE_OF_FRAGILE_BONES.get());
-    			output.accept(CrypticItems.WAXED_PILE_OF_FRAGILE_BONES.get());
-    			output.accept(CrypticItems.WAXED_POLISHED_PILE_OF_FRAGILE_BONES.get());
-    			output.accept(CrypticItems.PILE_OF_FRAGILE_BONES_SLAB.get());
-    			output.accept(CrypticItems.POLISHED_PILE_OF_FRAGILE_BONES_SLAB.get());
+    			output.accept(CrypticItems.CAVE_SALAD.get());
+    			output.accept(CrypticItems.MONSTROUS_HORN.get());
+    			output.accept(CrypticItems.SCREAMER.get());
     			output.accept(CrypticItems.HOWLER_HEAD.get());
     		}).build());
 }

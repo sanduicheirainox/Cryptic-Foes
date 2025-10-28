@@ -1301,7 +1301,7 @@ public class HowlerAnimation
 		))
 		.build();
 
-	public static final AnimationDefinition HOWLER_BLINK = AnimationDefinition.Builder.withLength(0.5F)
+	public static final AnimationDefinition HOWLER_BLINK = AnimationDefinition.Builder.withLength(0.5F).looping()
 		.addAnimation("leftdowneye", new AnimationChannel(AnimationChannel.Targets.POSITION, 
 			new Keyframe(0.1667F, KeyframeAnimations.posVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
 			new Keyframe(0.2083F, KeyframeAnimations.posVec(0.0F, 0.0F, 1.0F), AnimationChannel.Interpolations.LINEAR),

@@ -28,7 +28,6 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
@@ -98,17 +97,9 @@ public class EntityHowler extends AbstractAnimatableMonster
         	}
         	
         	@Override
-        	protected void findTarget() 
+        	protected AABB getTargetSearchArea(double p_26069_)
         	{
-        		AABB aabb = this.mob.getBoundingBox().inflate(3.0D, 64.0D, 3.0D);
-        		List<Player> list = this.mob.level.getEntitiesOfClass(Player.class, aabb);
-        		if(!list.isEmpty())
-        		{
-        			if(EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(list.get(0)))
-        			{
-            			this.target = list.get(0);
-        			}
-        		}
+        		return this.mob.getBoundingBox().inflate(7.5D, 64.0D, 7.5D);
         	}
         });
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
@@ -168,7 +159,7 @@ public class EntityHowler extends AbstractAnimatableMonster
         		{
             		this.targetTick++;
         		}
-        		else
+        		else if(this.getTarget().isAlive())
         		{
         			this.targetTick = 0;
             		if(this.canLook())
@@ -220,7 +211,13 @@ public class EntityHowler extends AbstractAnimatableMonster
         			{
             			this.setAnimationState(7);
             			this.setAnimationTick(46);
+            			this.setDeltaMovement(Vec3.ZERO);
                 		this.setNoGravity(true);
+        			}
+        			
+        			if(this.getAnimationState() == 7)
+        			{
+            			this.setDeltaMovement(Vec3.ZERO);
         			}
             		
             		if(this.getAnimationState() == 6)
@@ -240,10 +237,6 @@ public class EntityHowler extends AbstractAnimatableMonster
                 			}
                 			this.addDeltaMovement(new Vec3(0.0F, 0.05F, 0.0F));
             			}
-            		}
-            		else
-            		{
-                		this.setDeltaMovement(Vec3.ZERO);
             		}
             		
             		if(this.getAnimationTick() <= 0)
@@ -285,7 +278,7 @@ public class EntityHowler extends AbstractAnimatableMonster
     	}
     	if(this.isHowlerSleeping() && this.getAnimationState() == 1)
     	{
-    		if(this.getTarget() != null)
+    		if(this.getTarget() != null && this.getTarget().isAlive())
     		{
     			this.targetTick = 0;
     			this.setAnimationState(2);

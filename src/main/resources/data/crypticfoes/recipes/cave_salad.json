@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"key": {
+		"R": {
+			"item": "minecraft:rotten_flesh"
+		},
+		"H": {
+			"item": "crypticfoes:howler_membrane"
+		},
+		"B": {
+			"item": "minecraft:bowl"
+		},
+		"O": {
+			"item": "minecraft:bone"
+		}
+	},
+	"pattern": [
+		"RH",
+		"BO"
+	],
+	"result": {
+		"item": "crypticfoes:cave_salad",
+		"count": 1
+	},
+	"show_notification": true
+}

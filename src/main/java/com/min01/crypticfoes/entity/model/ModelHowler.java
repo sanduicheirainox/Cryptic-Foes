@@ -60,7 +60,7 @@ public class ModelHowler extends HierarchicalModel<EntityHowler>
 
 		head.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(50, 47).addBox(-2.5F, -3.0F, 0.0F, 5.0F, 3.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -10.0F, 0.5F, 0.0F, 0.7854F, 0.0F));
 
-		head.addOrReplaceChild("nose", CubeListBuilder.create().texOffs(54, 50).addBox(-3.5F, -4.0F, 0.0F, 7.0F, 6.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -4.0F, -7.0F));
+		head.addOrReplaceChild("nose", CubeListBuilder.create().texOffs(55, 50).addBox(-3.5F, -4.0F, 0.0F, 7.0F, 6.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -4.0F, -7.0F));
 
 		head.addOrReplaceChild("bone", CubeListBuilder.create().texOffs(46, 76).addBox(0.0F, -3.0F, 0.0F, 3.0F, 5.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(6.5F, -4.5F, -4.5F, 0.0F, 0.0F, 0.2182F));
 

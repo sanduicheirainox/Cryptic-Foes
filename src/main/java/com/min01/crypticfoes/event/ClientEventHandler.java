@@ -3,6 +3,9 @@ package com.min01.crypticfoes.event;
 import com.min01.crypticfoes.CrypticFoes;
 import com.min01.crypticfoes.block.CrypticBlocks;
 import com.min01.crypticfoes.block.model.ModelHowlerHead;
+import com.min01.crypticfoes.block.model.ModelScreamer;
+import com.min01.crypticfoes.blockentity.renderer.CrypticSkullRenderer;
+import com.min01.crypticfoes.blockentity.renderer.ScreamerRenderer;
 import com.min01.crypticfoes.entity.CrypticEntities;
 import com.min01.crypticfoes.entity.model.ModelBrancher;
 import com.min01.crypticfoes.entity.model.ModelHowler;
@@ -41,7 +44,8 @@ public class ClientEventHandler
 	@SubscribeEvent
 	public static void onFMLClientSetup(FMLClientSetupEvent event)
 	{
-        BlockEntityRenderers.register(CrypticBlocks.CRYPTIC_SKULL_BLOCK_ENTITY.get(), SkullBlockRenderer::new);
+        BlockEntityRenderers.register(CrypticBlocks.CRYPTIC_SKULL_BLOCK_ENTITY.get(), CrypticSkullRenderer::new);
+        BlockEntityRenderers.register(CrypticBlocks.SCREAMER_BLOCK_ENTITY.get(), ScreamerRenderer::new);
         ItemProperties.register(CrypticItems.MONSTROUS_HORN.get(), new ResourceLocation("charge"), (p_174585_, p_174586_, p_174587_, p_174588_) ->
         {
         	if(p_174587_ != null && p_174587_.isUsingItem())
@@ -77,6 +81,7 @@ public class ClientEventHandler
     	event.registerLayerDefinition(ModelBrancher.LAYER_LOCATION, ModelBrancher::createBodyLayer);
     	event.registerLayerDefinition(ModelHowler.LAYER_LOCATION, ModelHowler::createBodyLayer);
     	event.registerLayerDefinition(ModelHowlerHead.LAYER_LOCATION, ModelHowlerHead::createHeadModel);
+    	event.registerLayerDefinition(ModelScreamer.LAYER_LOCATION, ModelScreamer::createBodyLayer);
     }
     
 	@SubscribeEvent

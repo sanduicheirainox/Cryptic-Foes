@@ -1,13 +1,18 @@
 package com.min01.crypticfoes.block;
 
+import javax.annotation.Nullable;
+
 import com.min01.crypticfoes.blockentity.CrypticSkullBlockEntity;
 import com.min01.crypticfoes.misc.CrypticSkullTypes;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SkullBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -26,6 +31,20 @@ public class CrypticSkullBlock extends SkullBlock
 	public BlockEntity newBlockEntity(BlockPos p_151996_, BlockState p_151997_) 
 	{
 		return new CrypticSkullBlockEntity(p_151996_, p_151997_);
+	}
+	
+	@Nullable
+	@Override
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_151992_, BlockState p_151993_, BlockEntityType<T> p_151994_)
+	{
+		if(p_151992_.isClientSide) 
+		{
+			if(p_151993_.is(CrypticBlocks.HOWLER_HEAD.get())) 
+			{
+				return createTickerHelper(p_151994_, CrypticBlocks.CRYPTIC_SKULL_BLOCK_ENTITY.get(), CrypticSkullBlockEntity::update);
+			}
+		}
+		return null;
 	}
 	
 	@Override

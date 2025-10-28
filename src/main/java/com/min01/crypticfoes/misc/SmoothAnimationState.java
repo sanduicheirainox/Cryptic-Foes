@@ -2,6 +2,9 @@ package com.min01.crypticfoes.misc;
 
 import org.joml.Vector3f;
 
+import com.min01.crypticfoes.block.animation.KeyframeBlockAnimations;
+import com.min01.crypticfoes.block.model.CrypticSkullModelBase;
+import com.min01.crypticfoes.block.model.HierarchicalBlockModel;
 import com.min01.crypticfoes.util.CrypticClientUtil;
 
 import net.minecraft.client.animation.AnimationDefinition;
@@ -59,6 +62,28 @@ public class SmoothAnimationState extends AnimationState
 		{
 			float totalFactor = factor + this.factor(CrypticClientUtil.MC.getFrameTime());
 			KeyframeAnimations.animate(model, definition, t.getAccumulatedTime(), 1.0F - totalFactor, ANIMATION_VECTOR_CACHE);
+		});
+	}
+	
+	@OnlyIn(Dist.CLIENT)
+	public void animateBlock(HierarchicalBlockModel<?> model, AnimationDefinition definition, float ageInTicks) 
+	{
+		this.updateTime(ageInTicks, 1.0F);
+		this.ifStarted(t -> 
+		{
+			float totalFactor = this.factor(CrypticClientUtil.MC.getFrameTime());
+			KeyframeBlockAnimations.animate(model, definition, t.getAccumulatedTime(), 1.0F - totalFactor, ANIMATION_VECTOR_CACHE);
+		});
+	}
+	
+	@OnlyIn(Dist.CLIENT)
+	public void animateSkullBlock(CrypticSkullModelBase model, AnimationDefinition definition, float ageInTicks) 
+	{
+		this.updateTime(ageInTicks, 1.0F);
+		this.ifStarted(t -> 
+		{
+			float totalFactor = this.factor(CrypticClientUtil.MC.getFrameTime());
+			KeyframeBlockAnimations.animate(model, definition, t.getAccumulatedTime(), 1.0F - totalFactor, ANIMATION_VECTOR_CACHE);
 		});
 	}
 }
