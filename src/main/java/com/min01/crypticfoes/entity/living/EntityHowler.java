@@ -91,15 +91,13 @@ public class EntityHowler extends AbstractAnimatableMonster
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true) 
         {
         	@Override
-        	public boolean canUse() 
-        	{
-        		return super.canUse() && EntityHowler.this.isHowlerSleeping();
-        	}
-        	
-        	@Override
         	protected AABB getTargetSearchArea(double p_26069_)
         	{
-        		return this.mob.getBoundingBox().inflate(7.5D, 64.0D, 7.5D);
+        		if(((EntityHowler) this.mob).isHowlerSleeping())
+        		{
+            		return this.mob.getBoundingBox().inflate(7.5D, 64.0D, 7.5D);
+        		}
+        		return this.mob.getBoundingBox().inflate(12.5D, 64.0D, 12.5D);
         	}
         });
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));

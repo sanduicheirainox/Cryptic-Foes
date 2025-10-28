@@ -46,6 +46,7 @@ public class ScreamerRenderer implements BlockEntityRenderer<ScreamerBlockEntity
 			
 			p_112309_.pushPose();
 			p_112309_.translate(0.5F, 0.5F, 0.5F);
+			this.rotate(blockState.getValue(BlockStateProperties.HORIZONTAL_FACING), p_112309_);
 			p_112309_.scale(-1.0F, -1.0F, 1.0F);
 			p_112309_.translate(0.0F, -1.0F, 0.0F);
 			this.model.setupAnim(p_112307_, 0, 0, p_112308_ + p_112307_.tickCount, 0, 0);

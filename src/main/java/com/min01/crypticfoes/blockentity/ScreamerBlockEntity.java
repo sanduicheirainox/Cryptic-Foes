@@ -27,7 +27,7 @@ import net.minecraft.world.phys.Vec3;
 public class ScreamerBlockEntity extends BlockEntity
 {
 	public int tickCount;
-	public int animationTick = 45;
+	public int animationTick;
 	public final SmoothAnimationState screamAnimationState = new SmoothAnimationState();
 	
 	public ScreamerBlockEntity(BlockPos p_155229_, BlockState p_155230_) 
@@ -38,24 +38,17 @@ public class ScreamerBlockEntity extends BlockEntity
 	public static void update(Level level, BlockPos pos, BlockState state, ScreamerBlockEntity block)
 	{
 		block.tickCount++;
-		block.screamAnimationState.updateWhen(level.hasNeighborSignal(pos), block.tickCount);
+		block.screamAnimationState.updateWhen(block.animationTick > 0, block.tickCount);
 		
-		if(level.hasNeighborSignal(pos))
+		if(block.animationTick > 0)
 		{
-			if(block.animationTick > 0)
-			{
-				block.animationTick--;
-			}
-			else
-			{
-				block.animationTick = 45;
-			}
+			block.animationTick--;
 		}
-		else
+		else if(level.hasNeighborSignal(pos))
 		{
-			block.animationTick = 0;
+			block.animationTick = 45;
 		}
-		
+
 		if(block.animationTick == 15)
 		{
 			boolean charged = state.getValue(ScreamerBlock.CHARGED);
