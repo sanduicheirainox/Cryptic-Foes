@@ -30,6 +30,7 @@ public class CrypticSounds
 	public static final RegistryObject<SoundEvent> MONSTROUS_HORN_INHALE = registerSound("monstrous_horn_inhale");
 	public static final RegistryObject<SoundEvent> MONSTROUS_HORN_SCREAM = registerSound("monstrous_horn_scream");
 	public static final RegistryObject<SoundEvent> SCREAMER_WORK = registerSound("screamer_work");
+	public static final RegistryObject<SoundEvent> SCREAMER_SWITCH = registerSound("screamer_switch");
 	public static final RegistryObject<SoundEvent> SILENCING_BLEND_OFF = registerSound("silencing_blend_off");
 	public static final RegistryObject<SoundEvent> SILENCING_BLEND_ON = registerSound("silencing_blend_on");
 	

@@ -12,6 +12,7 @@ import com.min01.crypticfoes.sound.CrypticSounds;
 import com.min01.crypticfoes.util.CrypticUtil;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -52,7 +53,7 @@ public class ScreamerBlockEntity extends BlockEntity
 		{
 			if(block.tickCount % 45 == 0)
 			{
-	    		level.playSound(null, pos, CrypticSounds.SCREAMER_WORK.get(), SoundSource.BLOCKS);
+	    		level.playSound(null, pos, CrypticSounds.SCREAMER_WORK.get(), SoundSource.BLOCKS, 0.7F, 1.0F);
 			}
 			block.tickCount++;
 			if(block.tickCount == 30)
@@ -90,5 +91,19 @@ public class ScreamerBlockEntity extends BlockEntity
 		{
 			block.tickCount = 0;
 		}
+	}
+	
+	@Override
+	public void load(CompoundTag p_155245_) 
+	{
+		super.load(p_155245_);
+		this.tickCount = p_155245_.getInt("TickCount");
+	}
+	
+	@Override
+	protected void saveAdditional(CompoundTag p_187471_)
+	{
+		super.saveAdditional(p_187471_);
+		p_187471_.putInt("TickCount", this.tickCount);
 	}
 }

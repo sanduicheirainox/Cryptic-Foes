@@ -21,7 +21,7 @@ public class MixinKeyMapping
 			KeyMapping mapping = KeyMapping.class.cast(this);
 			if(mapping == CrypticClientUtil.MC.options.keyJump || mapping == CrypticClientUtil.MC.options.keyRight || mapping == CrypticClientUtil.MC.options.keyLeft || mapping == CrypticClientUtil.MC.options.keyUp || mapping == CrypticClientUtil.MC.options.keyDown)
 			{
-				if(CrypticClientUtil.MC.player.hasEffect(CrypticEffects.STUNNED.get()))
+				if(CrypticClientUtil.MC.player.hasEffect(CrypticEffects.STUNNED.get()) && !CrypticClientUtil.MC.player.isSpectator())
 				{
 					cir.setReturnValue(false);
 				}

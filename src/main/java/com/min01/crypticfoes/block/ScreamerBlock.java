@@ -2,9 +2,11 @@ package com.min01.crypticfoes.block;
 
 import com.min01.crypticfoes.blockentity.ScreamerBlockEntity;
 import com.min01.crypticfoes.entity.projectile.EntityHowlerScream;
+import com.min01.crypticfoes.sound.CrypticSounds;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -90,6 +92,7 @@ public class ScreamerBlock extends BaseEntityBlock
 	{
 		if(p_60456_ instanceof EntityHowlerScream)
 		{
+			p_60453_.playSound(null, p_60455_.getBlockPos(), CrypticSounds.SCREAMER_SWITCH.get(), SoundSource.BLOCKS, 0.7F, 1.0F);
 			p_60453_.setBlockAndUpdate(p_60455_.getBlockPos(), p_60454_.setValue(CHARGED, true));
 		}
 	}

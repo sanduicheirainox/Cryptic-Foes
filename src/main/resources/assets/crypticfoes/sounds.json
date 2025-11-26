@@ -113,6 +113,14 @@
 			}
 		]
 	},
+	"screamer_switch": {
+		"sounds": [
+			{
+				"name": "crypticfoes:block/screamer_switch",
+				"stream": true
+			}
+		]
+	},
 	"silencing_blend_off": {
 		"sounds": [
 			"crypticfoes:block/silencing_blend_off1",

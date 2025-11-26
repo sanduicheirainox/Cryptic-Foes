@@ -28,7 +28,7 @@ public class ClientEventHandlerForge
 	@SubscribeEvent
 	public static void onComputeFovModifier(ComputeFovModifierEvent event)
 	{
-		if(CrypticClientUtil.MC.player.hasEffect(CrypticEffects.STUNNED.get()))
+		if(CrypticClientUtil.MC.player.hasEffect(CrypticEffects.STUNNED.get()) && !CrypticClientUtil.MC.player.isSpectator())
 		{
 			float fov = event.getFovModifier();
 			event.setNewFovModifier(fov - 0.5F);
@@ -68,7 +68,7 @@ public class ClientEventHandlerForge
 		{
 			if(event.getButton() == CrypticClientUtil.MC.options.keyAttack.getKey().getValue() || event.getButton() == CrypticClientUtil.MC.options.keyUse.getKey().getValue())
 			{
-				if(CrypticClientUtil.MC.player.hasEffect(CrypticEffects.STUNNED.get()))
+				if(CrypticClientUtil.MC.player.hasEffect(CrypticEffects.STUNNED.get()) && !CrypticClientUtil.MC.player.isSpectator())
 				{
 					event.setCanceled(true);
 				}

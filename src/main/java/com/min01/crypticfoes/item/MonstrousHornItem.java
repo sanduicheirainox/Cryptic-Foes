@@ -45,7 +45,7 @@ public class MonstrousHornItem extends Item
 			{
 				setHornCharge(p_41430_, charge + 1);
 				setCurrentHornCharge(p_41430_, charge + 1);
-				p_41429_.playSound(CrypticSounds.MONSTROUS_HORN_INHALE.get());
+				p_41429_.playSound(CrypticSounds.MONSTROUS_HORN_INHALE.get(), 1.0F, charge);
 			}
 		}
 	}
