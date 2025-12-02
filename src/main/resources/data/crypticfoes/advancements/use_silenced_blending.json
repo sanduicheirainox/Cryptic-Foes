@@ -1,0 +1,46 @@
+{
+	"parent": "minecraft:husbandry/safely_harvest_honey",
+	"criteria": {
+		"use_silencing_blend": {
+			"trigger": "minecraft:item_used_on_block",
+			"conditions": {
+				"location": [
+					{
+						"condition": "minecraft:match_tool",
+						"predicate": {
+							"items": [
+								"crypticfoes:silencing_blend"
+							]
+						}
+					},
+					{
+						"condition": "minecraft:location_check",
+						"predicate": {
+						}
+					}
+				]
+			}
+		}
+	},
+	"display": {
+		"announce_to_chat": true,
+		"description": {
+			"translate": "advancements.crypticfoes.use_silenced_blending.desc"
+		},
+		"frame": "task",
+		"hidden": false,
+		"icon": {
+			"item": "crypticfoes:silencing_blend"
+		},
+		"show_toast": true,
+		"title": {
+			"translate": "advancements.crypticfoes.use_silenced_blending.title"
+		}
+	},
+	"requirements": [
+		[
+			"use_silencing_blend"
+		]
+	],
+	"sends_telemetry_event": true
+}

@@ -5,6 +5,7 @@ import java.util.UUID;
 import java.util.WeakHashMap;
 
 import com.min01.crypticfoes.CrypticFoes;
+import com.min01.crypticfoes.advancements.CrypticCriteriaTriggers;
 import com.min01.crypticfoes.block.FallenLeavesBlock;
 import com.min01.crypticfoes.effect.CrypticEffects;
 import com.min01.crypticfoes.entity.living.EntityHowler;
@@ -202,24 +203,31 @@ public class EventHandlerForge
 		{
 			event.setCanceled(true);
 		}
-		if(CrypticUtil.isBlockSilenced(level, pos) && stack.canPerformAction(ToolActions.AXE_WAX_OFF))
+		if(CrypticUtil.isBlockSilenced(level, pos))
 		{
-			CrypticUtil.removeSilencedBlock(level, pos);
-			BlockState state = level.getBlockState(pos);
-			if(player instanceof ServerPlayer)
+			if(player instanceof ServerPlayer serverPlayer)
 			{
-				CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger((ServerPlayer)player, pos, stack);
+				CrypticCriteriaTriggers.ITEM_USED_ON_SILENCED_BLOCK.trigger(serverPlayer, pos, stack);
 			}
-			level.playSound(player, pos, CrypticSounds.SILENCING_BLEND_OFF.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-			level.levelEvent(player, 3004, pos, 0);
-			level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, state));
-			stack.hurtAndBreak(1, player, (p_150686_) ->
+			if(stack.canPerformAction(ToolActions.AXE_WAX_OFF))
 			{
-				p_150686_.broadcastBreakEvent(event.getHand());
-			});
-			player.swing(event.getHand());
-			event.setCanceled(true);
-			event.setCancellationResult(InteractionResult.sidedSuccess(player.level.isClientSide));
+				CrypticUtil.removeSilencedBlock(level, pos);
+				BlockState state = level.getBlockState(pos);
+				if(player instanceof ServerPlayer serverPlayer)
+				{
+					CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger(serverPlayer, pos, stack);
+				}
+				level.playSound(player, pos, CrypticSounds.SILENCING_BLEND_OFF.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+				level.levelEvent(player, 3004, pos, 0);
+				level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, state));
+				stack.hurtAndBreak(1, player, (p_150686_) ->
+				{
+					p_150686_.broadcastBreakEvent(event.getHand());
+				});
+				player.swing(event.getHand());
+				event.setCanceled(true);
+				event.setCancellationResult(InteractionResult.sidedSuccess(player.level.isClientSide));
+			}
 		}
 	}
 }

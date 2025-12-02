@@ -39,5 +39,15 @@
 	"effect.crypticfoes.fragility": "Fragility",
 	"effect.crypticfoes.fragility.description": "reduce armor point",
 	"effect.crypticfoes.stunned": "Stunned",
-	"effect.crypticfoes.stunned.description": "unable to move and disable interacting with items and blocks"
+	"effect.crypticfoes.stunned.description": "unable to move and disable interacting with items and blocks",
+	"advancements.crypticfoes.use_silenced_blending.title": "Volume down",
+	"advancements.crypticfoes.use_silenced_blending.desc": "Apply a Silencing Blend to a block to mute it!",
+	"advancements.crypticfoes.scrap_silenced_blending.title": "Volume up",
+	"advancements.crypticfoes.scrap_silenced_blending.desc": "Scrape silencing effect off of a block",
+	"advancements.crypticfoes.activate_silenced_tnt.title": "Shhhh...",
+	"advancements.crypticfoes.activate_silenced_tnt.desc": "Activate the silenced TNT",
+	"advancements.crypticfoes.spyglass_at_howler.title": "Is it a Bat...man?",
+	"advancements.crypticfoes.spyglass_at_howler.desc": "Look at a Howler through a Spyglass",
+	"advancements.crypticfoes.stunning_speech.title": "Stunning Speech",
+	"advancements.crypticfoes.stunning_speech.desc": "Stun 10 mobs with one use of the Monstrous Horn"
 }

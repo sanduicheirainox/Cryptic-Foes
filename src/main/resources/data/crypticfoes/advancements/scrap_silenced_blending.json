@@ -1,0 +1,51 @@
+{
+	"parent": "crypticfoes:use_silenced_blending",
+	"criteria": {
+		"scrap_silencing_blend": {
+			"trigger": "crypticfoes:item_used_on_silenced_block",
+			"conditions": {
+				"location": [
+					{
+						"condition": "minecraft:location_check",
+						"predicate": {
+						}
+					},
+					{
+						"condition": "minecraft:match_tool",
+						"predicate": {
+							"items": [
+								"minecraft:wooden_axe",
+								"minecraft:golden_axe",
+								"minecraft:stone_axe",
+								"minecraft:iron_axe",
+								"minecraft:diamond_axe",
+								"minecraft:netherite_axe"
+							]
+						}
+					}
+				]
+			}
+		}
+	},
+	"display": {
+		"announce_to_chat": true,
+		"description": {
+			"translate": "advancements.crypticfoes.scrap_silenced_blending.desc"
+		},
+		"frame": "task",
+		"hidden": false,
+		"icon": {
+			"item": "minecraft:diamond_axe"
+		},
+		"show_toast": true,
+		"title": {
+			"translate": "advancements.crypticfoes.scrap_silenced_blending.title"
+		}
+	},
+	"requirements": [
+		[
+			"scrap_silencing_blend"
+		]
+	],
+	"sends_telemetry_event": true
+}

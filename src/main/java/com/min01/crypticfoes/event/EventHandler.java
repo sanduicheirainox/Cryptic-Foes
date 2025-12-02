@@ -4,6 +4,7 @@ import com.google.common.base.Suppliers;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableBiMap;
 import com.min01.crypticfoes.CrypticFoes;
+import com.min01.crypticfoes.advancements.CrypticCriteriaTriggers;
 import com.min01.crypticfoes.block.CrypticBlocks;
 import com.min01.crypticfoes.effect.CrypticEffects;
 import com.min01.crypticfoes.entity.CrypticEntities;
@@ -12,6 +13,7 @@ import com.min01.crypticfoes.entity.living.EntityHowler;
 import com.min01.crypticfoes.entity.living.EntityPetrified;
 import com.min01.crypticfoes.item.CrypticItems;
 
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.item.HoneycombItem;
@@ -42,6 +44,8 @@ public class EventHandler
 		
 		BiMap<Block, Block> waxables = HoneycombItem.WAXABLES.get();
 		HoneycombItem.WAXABLES = Suppliers.memoize(() -> ImmutableBiMap.<Block, Block>builder().putAll(waxables).put(CrypticBlocks.PILE_OF_FRAGILE_BONES.get(), CrypticBlocks.WAXED_PILE_OF_FRAGILE_BONES.get()).put(CrypticBlocks.POLISHED_PILE_OF_FRAGILE_BONES.get(), CrypticBlocks.WAXED_POLISHED_PILE_OF_FRAGILE_BONES.get()).build());
+	
+		CriteriaTriggers.register(CrypticCriteriaTriggers.ITEM_USED_ON_SILENCED_BLOCK);
 	}
 	
     @SubscribeEvent

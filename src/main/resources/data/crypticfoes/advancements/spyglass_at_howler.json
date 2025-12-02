@@ -1,0 +1,50 @@
+{
+	"parent": "minecraft:adventure/spyglass_at_parrot",
+	"criteria": {
+		"spyglass_at_howler": {
+			"trigger": "minecraft:using_item",
+			"conditions": {
+				"item": {
+					"items": [
+						"minecraft:spyglass"
+					]
+				},
+				"player": [
+					{
+						"condition": "minecraft:entity_properties",
+						"entity": "this",
+						"predicate": {
+							"type_specific": {
+								"type": "player",
+								"looking_at": {
+									"type": "crypticfoes:howler"
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	},
+	"display": {
+		"announce_to_chat": true,
+		"description": {
+			"translate": "advancements.crypticfoes.spyglass_at_howler.desc"
+		},
+		"frame": "task",
+		"hidden": false,
+		"icon": {
+			"item": "minecraft:spyglass"
+		},
+		"show_toast": true,
+		"title": {
+			"translate": "advancements.crypticfoes.spyglass_at_howler.title"
+		}
+	},
+	"requirements": [
+		[
+			"spyglass_at_howler"
+		]
+	],
+	"sends_telemetry_event": true
+}

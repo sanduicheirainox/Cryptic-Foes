@@ -1,0 +1,50 @@
+{
+	"parent": "crypticfoes:use_silenced_blending",
+	"criteria": {
+		"activate_silenced_tnt": {
+			"trigger": "crypticfoes:item_used_on_silenced_block",
+			"conditions": {
+				"location": [
+					{
+						"condition": "minecraft:location_check",
+						"predicate": {
+						}
+					},
+					{
+						"condition": "minecraft:match_tool",
+						"predicate": {
+							"items": [
+								"minecraft:flint_and_steel"
+							]
+						}
+					},
+					{
+						"condition": "minecraft:block_state_property",
+						"block": "minecraft:tnt"
+					}
+				]
+			}
+		}
+	},
+	"display": {
+		"announce_to_chat": true,
+		"description": {
+			"translate": "advancements.crypticfoes.activate_silenced_tnt.desc"
+		},
+		"frame": "task",
+		"hidden": false,
+		"icon": {
+			"item": "minecraft:tnt"
+		},
+		"show_toast": true,
+		"title": {
+			"translate": "advancements.crypticfoes.activate_silenced_tnt.title"
+		}
+	},
+	"requirements": [
+		[
+			"activate_silenced_tnt"
+		]
+	],
+	"sends_telemetry_event": true
+}
