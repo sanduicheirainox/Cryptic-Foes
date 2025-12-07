@@ -22,11 +22,11 @@ public class BrancherLayer extends RenderLayer<EntityBrancher, ModelBrancher>
 	}
 
 	@Override
-	public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, EntityBrancher entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float p_117358_)
+	public void render(PoseStack poseStack, MultiBufferSource bufferIn, int packedLightIn, EntityBrancher entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch)
 	{
 		if(!entity.isInvisible() && entity.getAngerCount() > 0)
 		{
-			VertexConsumer consumer = bufferSource.getBuffer(RenderType.eyes(new ResourceLocation(CrypticFoes.MODID, "textures/entity/brancher_layer.png")));
+			VertexConsumer consumer = bufferIn.getBuffer(RenderType.eyes(new ResourceLocation(CrypticFoes.MODID, "textures/entity/brancher_layer.png")));
 	        float strength = 0.5F + Mth.clamp(((float) Math.cos((entity.glowingTicks + ageInTicks) * 0.1F)) - 0.5F, -0.5F, 0.5F);
 
 	        strength += Mth.lerp(ageInTicks, entity.brightnessOld, entity.brightness) * Mth.PI;
@@ -36,7 +36,7 @@ public class BrancherLayer extends RenderLayer<EntityBrancher, ModelBrancher>
 	        {
 	        	strength = 1.0F;
 	        }
-			this.getParentModel().renderToBuffer(poseStack, consumer, packedLight, LivingEntityRenderer.getOverlayCoords(entity, 0.0F), strength, strength, strength, 1.0F);
+			this.getParentModel().renderToBuffer(poseStack, consumer, packedLightIn, LivingEntityRenderer.getOverlayCoords(entity, 0.0F), strength, strength, strength, 1.0F);
 		}
 	}
 }

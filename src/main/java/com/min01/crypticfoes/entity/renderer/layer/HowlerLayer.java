@@ -21,12 +21,12 @@ public class HowlerLayer extends RenderLayer<EntityHowler, ModelHowler>
 	}
 
 	@Override
-	public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, EntityHowler entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float p_117358_)
+	public void render(PoseStack poseStack, MultiBufferSource bufferIn, int packedLightIn, EntityHowler entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch)
 	{
 		if(!entity.isInvisible())
 		{
-			VertexConsumer consumer = bufferSource.getBuffer(RenderType.eyes(new ResourceLocation(CrypticFoes.MODID, "textures/entity/howler_layer.png")));
-			this.getParentModel().renderToBuffer(poseStack, consumer, packedLight, LivingEntityRenderer.getOverlayCoords(entity, 0.0F), 1.0F, 1.0F, 1.0F, 1.0F);
+			VertexConsumer consumer = bufferIn.getBuffer(RenderType.eyes(new ResourceLocation(CrypticFoes.MODID, "textures/entity/howler_layer.png")));
+			this.getParentModel().renderToBuffer(poseStack, consumer, packedLightIn, LivingEntityRenderer.getOverlayCoords(entity, 0.0F), 1.0F, 1.0F, 1.0F, 1.0F);
 		}
 	}
 }
