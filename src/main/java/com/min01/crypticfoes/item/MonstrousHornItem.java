@@ -1,10 +1,12 @@
 package com.min01.crypticfoes.item;
 
+import com.min01.crypticfoes.advancements.CrypticCriteriaTriggers;
 import com.min01.crypticfoes.entity.CrypticEntities;
 import com.min01.crypticfoes.entity.projectile.EntityHowlerScream;
 import com.min01.crypticfoes.sound.CrypticSounds;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
@@ -58,6 +60,7 @@ public class MonstrousHornItem extends Item
 		{
 			if(isScream)
 			{
+				int stunCount = getStunCount(p_41404_);
 				int charge = getHornCharge(p_41404_);
 				int chargeTick = getHornChargeTick(p_41404_);
 				int tick = getScreamTick(p_41404_);
@@ -80,32 +83,34 @@ public class MonstrousHornItem extends Item
 							p_41406_.playSound(CrypticSounds.MONSTROUS_HORN_SCREAM.get());
 						}
 					}
+					if(stunCount >= 10 && p_41406_ instanceof ServerPlayer serverPlayer)
+					{
+						CrypticCriteriaTriggers.STUNNING_SPEECH.trigger(serverPlayer);
+					}
 				}
 				else
 				{
-					setScream(p_41404_, false);
-					setScreamTick(p_41404_, 0);
-					setHornCharge(p_41404_, 0);
-					setCurrentHornCharge(p_41404_, 0);
-					setHornChargeTick(p_41404_, 0);
-					if(p_41406_ instanceof Player player)
-					{
-						player.getCooldowns().addCooldown(p_41404_.getItem(), 140);
-					}
+					reset(p_41404_, p_41406_);
 				}
 			}
 		}
 		else if(getHornCharge(p_41404_) > 0)
 		{
-			setScream(p_41404_, false);
-			setScreamTick(p_41404_, 0);
-			setHornCharge(p_41404_, 0);
-			setCurrentHornCharge(p_41404_, 0);
-			setHornChargeTick(p_41404_, 0);
-			if(p_41406_ instanceof Player player)
-			{
-				player.getCooldowns().addCooldown(p_41404_.getItem(), 140);
-			}
+			reset(p_41404_, p_41406_);
+		}
+	}
+	
+	public static void reset(ItemStack stack, Entity entity)
+	{
+		setScream(stack, false);
+		setScreamTick(stack, 0);
+		setHornCharge(stack, 0);
+		setCurrentHornCharge(stack, 0);
+		setHornChargeTick(stack, 0);
+		setStunCount(stack, 0);
+		if(entity instanceof Player player)
+		{
+			player.getCooldowns().addCooldown(stack.getItem(), 140);
 		}
 	}
 	
@@ -135,6 +140,18 @@ public class MonstrousHornItem extends Item
     {
         CompoundTag tag = stack.getOrCreateTag();
         tag.putBoolean("isScream", scream);
+    }
+    
+    public static int getStunCount(ItemStack stack)
+    {
+        CompoundTag tag = stack.getTag();
+        return tag != null ? tag.getInt("StunCount") : 0;
+    }
+
+    public static void setStunCount(ItemStack stack, int tick)
+    {
+        CompoundTag tag = stack.getOrCreateTag();
+        tag.putInt("StunCount", tick);
     }
     
     public static int getScreamTick(ItemStack stack)

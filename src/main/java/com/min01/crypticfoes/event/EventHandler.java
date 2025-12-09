@@ -46,6 +46,7 @@ public class EventHandler
 		HoneycombItem.WAXABLES = Suppliers.memoize(() -> ImmutableBiMap.<Block, Block>builder().putAll(waxables).put(CrypticBlocks.PILE_OF_FRAGILE_BONES.get(), CrypticBlocks.WAXED_PILE_OF_FRAGILE_BONES.get()).put(CrypticBlocks.POLISHED_PILE_OF_FRAGILE_BONES.get(), CrypticBlocks.WAXED_POLISHED_PILE_OF_FRAGILE_BONES.get()).build());
 	
 		CriteriaTriggers.register(CrypticCriteriaTriggers.ITEM_USED_ON_SILENCED_BLOCK);
+		CriteriaTriggers.register(CrypticCriteriaTriggers.STUNNING_SPEECH);
 	}
 	
     @SubscribeEvent

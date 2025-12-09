@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.min01.crypticfoes.effect.CrypticEffects;
+import com.min01.crypticfoes.item.CrypticItems;
+import com.min01.crypticfoes.item.MonstrousHornItem;
 import com.min01.crypticfoes.misc.CrypticTags;
 import com.min01.crypticfoes.util.CrypticUtil;
 
@@ -20,7 +22,9 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -63,11 +67,24 @@ public class EntityHowlerScream extends ThrowableProjectile
 			List<LivingEntity> list = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(scale), t -> !t.isAlliedTo(this.getOwner()) && t != this.getOwner() && !t.hasEffect(CrypticEffects.STUNNED.get()));
 			list.forEach(t -> 
 			{
-				if(!t.getType().is(CrypticTags.CrypticEntity.RESIST_TO_STUN))
+				if(!t.getType().is(CrypticTags.CrypticEntity.RESIST_TO_STUN) && !t.hasEffect(CrypticEffects.STUNNED.get()))
 				{
+					this.addStunCount();
 					t.addEffect(new MobEffectInstance(CrypticEffects.STUNNED.get(), this.getStunDuration()));
 				}
 			});
+		}
+	}
+	
+	public void addStunCount()
+	{
+		if(this.getOwner() instanceof Player player)
+		{
+			ItemStack stack = player.getItemInHand(player.getUsedItemHand());
+			if(stack.is(CrypticItems.MONSTROUS_HORN.get()))
+			{
+				MonstrousHornItem.setStunCount(stack, MonstrousHornItem.getStunCount(stack) + 1);
+			}
 		}
 	}
 	

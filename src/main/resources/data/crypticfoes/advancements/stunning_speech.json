@@ -1,0 +1,29 @@
+{
+	"parent": "minecraft:adventure/root",
+	"criteria": {
+		"stunning_speech": {
+			"trigger": "crypticfoes:stunning_speech"
+		}
+	},
+	"display": {
+		"announce_to_chat": true,
+		"description": {
+			"translate": "advancements.crypticfoes.stunning_speech.desc"
+		},
+		"frame": "challenge",
+		"hidden": false,
+		"icon": {
+			"item": "crypticfoes:monstrous_horn"
+		},
+		"show_toast": true,
+		"title": {
+			"translate": "advancements.crypticfoes.stunning_speech.title"
+		}
+	},
+	"requirements": [
+		[
+			"stunning_speech"
+		]
+	],
+	"sends_telemetry_event": true
+}
