@@ -59,21 +59,16 @@ public class ClientEventHandlerForge
             event.setRoll((float)(event.getRoll() + shakeAmplitude * Math.cos(ticksExistedDelta * 4.0F) * 25.0));
         }
     }
-	
+    
 	@SubscribeEvent
-    public static void onMouseButtonInput(InputEvent.MouseButton.Pre event)
-    {
-		if(CrypticClientUtil.MC.player != null && CrypticClientUtil.MC.screen == null)
+	public static void onInteractionKeyMappingTriggered(InputEvent.InteractionKeyMappingTriggered event)
+	{
+		if(CrypticClientUtil.MC.player.hasEffect(CrypticEffects.STUNNED.get()) && !CrypticClientUtil.MC.player.isSpectator())
 		{
-			if(event.getButton() == CrypticClientUtil.MC.options.keyAttack.getKey().getValue() || event.getButton() == CrypticClientUtil.MC.options.keyUse.getKey().getValue())
-			{
-				if(CrypticClientUtil.MC.player.hasEffect(CrypticEffects.STUNNED.get()) && !CrypticClientUtil.MC.player.isSpectator())
-				{
-					event.setCanceled(true);
-				}
-			}
+			event.setSwingHand(false);
+			event.setCanceled(true);
 		}
-    }
+	}
 	
 	@SubscribeEvent
     public static void onRenderGuiOverlayEvent(RenderGuiOverlayEvent.Post event)
