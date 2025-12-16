@@ -12,7 +12,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gameevent.vibrations.VibrationSystem;
 
-@Mixin(VibrationSystem.User.class)
+@Mixin(value = VibrationSystem.User.class, priority = -10000)
 public interface MixinVibrationSystem extends VibrationSystem.User 
 {
 	@Override

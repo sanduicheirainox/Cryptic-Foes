@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.extensions.IForgeBlockState;
 
-@Mixin(IForgeBlockState.class)
+@Mixin(value = IForgeBlockState.class, priority = -10000)
 public interface MixinIForgeBlockState extends IForgeBlockState
 {
 	@SuppressWarnings("deprecation")

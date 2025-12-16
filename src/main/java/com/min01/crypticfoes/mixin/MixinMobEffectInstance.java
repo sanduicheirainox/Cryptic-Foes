@@ -9,7 +9,7 @@ import com.min01.crypticfoes.effect.CrypticEffects;
 
 import net.minecraft.world.effect.MobEffectInstance;
 
-@Mixin(MobEffectInstance.class)
+@Mixin(value = MobEffectInstance.class, priority = -10000)
 public class MixinMobEffectInstance
 {
 	@Inject(at = @At("HEAD"), method = "isVisible", cancellable = true)

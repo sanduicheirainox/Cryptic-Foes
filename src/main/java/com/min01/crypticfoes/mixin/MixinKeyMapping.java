@@ -10,7 +10,7 @@ import com.min01.crypticfoes.util.CrypticClientUtil;
 
 import net.minecraft.client.KeyMapping;
 
-@Mixin(KeyMapping.class)
+@Mixin(value = KeyMapping.class, priority = -10000)
 public class MixinKeyMapping
 {
 	@Inject(at = @At("TAIL"), method = "isDown", cancellable = true)

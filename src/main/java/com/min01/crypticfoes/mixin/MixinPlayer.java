@@ -16,7 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-@Mixin(Player.class)
+@Mixin(value = Player.class, priority = -10000)
 public class MixinPlayer
 {
 	@Inject(at = @At("HEAD"), method = "eat", cancellable = true)
